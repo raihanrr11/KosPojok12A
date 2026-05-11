@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply text-gray-900;
+        font-size: 16px;
+        line-height: 1.65;
+        font-feature-settings: "kern" 1;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply tracking-tight;
+        letter-spacing: -0.01em;
+        font-weight: 600 !important;
+    }
+
+    h1 { font-size: 36px; line-height: 1.2; }
+    h2 { font-size: 28px; line-height: 1.3; }
+    h3 { font-size: 22px; line-height: 1.4; }
+}
+
+@layer components {
+    /* Refined Card Styling */
+    .card-refined {
+        @apply bg-white shadow-sm border border-gray-100;
+        border-radius: 14px;
+    }
+
+    /* Refined Badge Styling */
+    .badge-refined {
+        @apply inline-flex items-center;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 500;
+        border-radius: 9999px;
+    }
+
+    /* Refined Button Styling */
+    .btn-refined {
+        @apply inline-flex items-center justify-center transition-all duration-200;
+        padding: 10px 22px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 10px;
+    }
+
+    /* Refined Nav Height */
+    .nav-refined {
+        height: 80px;
+    }
+}
