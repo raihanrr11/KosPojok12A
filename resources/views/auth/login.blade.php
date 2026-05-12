@@ -50,6 +50,16 @@
     .animate-shake {
       animation: shake 0.5s ease-in-out;
     }
+
+    [x-cloak] {
+      display: none !important;
+    }
+
+    /* Hide browser's native password reveal/clear buttons to avoid duplication */
+    input::-ms-reveal,
+    input::-ms-clear {
+      display: none;
+    }
   </style>
 </head>
 
@@ -141,7 +151,7 @@
           <div>
             <label for="email" class="block text-sm font-medium text-gray-200"
               style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-size: 11px;">Email</label>
-            <input id="email" name="email" type="text" value="{{ old('email') }}" autofocus autocomplete="email"
+            <input id="email" name="email" type="email" value="{{ old('email') }}" autofocus autocomplete="email"
               class="mt-1 block w-full rounded-xl bg-white/5 border border-white/20 text-white placeholder-gray-400 shadow-sm focus:bg-white/10 focus:border-[#2BD5BB] focus:ring-[#2BD5BB] transition duration-200 @error('email') border-red-500 bg-red-500/10 @enderror">
             @error('email')
               <p class="mt-1.5 text-sm text-red-400 font-medium">{{ $message }}</p>
@@ -152,19 +162,19 @@
             <label for="password" class="block text-sm font-medium text-gray-200"
               style="font-family: 'Space Grotesk', sans-serif; letter-spacing: 1px; text-transform: uppercase; font-size: 11px;">Password</label>
             <div class="mt-1 relative">
-              <input :type="show ? 'text' : 'password'" id="password" name="password" autocomplete="current-password"
+              <input :type="show ? 'text' : 'password'" type="password" id="password" name="password" autocomplete="current-password"
                 class="block w-full rounded-xl bg-white/5 border border-white/20 text-white placeholder-gray-400 shadow-sm focus:bg-white/10 focus:border-[#2BD5BB] focus:ring-[#2BD5BB] pr-10 transition duration-200 @error('password') border-red-500 bg-red-500/10 @enderror">
               <button type="button" @click="show=!show"
                 class="absolute inset-y-0 right-0 px-3 text-gray-400 hover:text-white transition"
                 aria-label="Toggle password">
-                <svg x-show="!show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                <svg x-show="!show" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
-                <svg x-show="show" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                <svg x-show="show" x-cloak xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                   stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a10.05 10.05 0 012.042-3.368M6.177 6.177A9.956 9.956 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.052 10.052 0 01-4.043 5.073M15 12a3 3 0 00-3-3M3 3l18 18" />
@@ -284,9 +294,9 @@
                       <span class="px-3 py-1 bg-[#2BD5BB]/20 text-[#2BD5BB] text-[10px] font-black uppercase tracking-widest rounded-full border border-[#2BD5BB]/30 backdrop-blur-md">Tersedia</span>
                     </div>
 
-                    <!-- Photo Navigation Arrows (Visible on Hover) -->
+                    <!-- Photo Navigation Arrows (Visible on Mobile, Hover on Desktop) -->
                     <template x-if="photos.length > 1">
-                      <div class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-30">
+                      <div class="absolute inset-y-0 left-0 right-0 flex items-center justify-between px-3 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 z-30">
                         <button @click.prevent="activeIndex = activeIndex === 0 ? photos.length - 1 : activeIndex - 1"
                           class="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 border border-white/20 transition transform active:scale-90">
                           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
