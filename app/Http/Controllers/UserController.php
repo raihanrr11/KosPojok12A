@@ -102,7 +102,7 @@ class UserController extends Controller
                 'string',
                 'email:rfc,dns',
                 'max:255',
-                'unique:users,email,' . $user->id,
+                \Illuminate\Validation\Rule::unique('users')->ignore($user->id)->whereNull('deleted_at'),
                 'regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             ],
             
@@ -238,14 +238,29 @@ class UserController extends Controller
     /**
      * Method untuk melihat semua keluhan publik
      */
-    public function publicComplaints()
+    public function publicComplaints(Request $request)
     {
-        $complaints = Complaint::public()
-            ->with(['user', 'respondedBy'])
-            ->latest()
-            ->paginate(10);
+        $query = Complaint::public()->with(['user', 'respondedBy']);
 
-        return view('user.public-complaints', compact('complaints'));
+        if ($request->filled('status')) {
+            if ($request->status === 'pending') {
+                $query->where('status', 'open');
+            } elseif ($request->status === 'in_progress') {
+                $query->where('status', 'in_progress');
+            } elseif ($request->status === 'completed') {
+                $query->whereIn('status', ['resolved', 'closed']);
+            }
+        }
+
+        $complaints = $query->latest()->paginate(10)->withQueryString();
+
+        $counts = [
+            'pending' => Complaint::public()->where('status', 'open')->count(),
+            'in_progress' => Complaint::public()->where('status', 'in_progress')->count(),
+            'completed' => Complaint::public()->whereIn('status', ['resolved', 'closed'])->count(),
+        ];
+
+        return view('user.public-complaints', compact('complaints', 'counts'));
     }
 
     // ============================================

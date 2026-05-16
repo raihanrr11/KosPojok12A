@@ -55,6 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/create', [AdminController::class, 'userCreate'])->name('users.create');
     Route::post('/users', [AdminController::class, 'userStore'])->name('users.store');
+    Route::get('/users/{user}', [AdminController::class, 'userShow'])->name('users.show')->withTrashed();
     Route::get('/users/{user}/edit', [AdminController::class, 'userEdit'])->name('users.edit');
     Route::put('/users/{user}', [AdminController::class, 'userUpdate'])->name('users.update');
     Route::delete('/users/{user}', [AdminController::class, 'userDestroy'])->name('users.destroy');

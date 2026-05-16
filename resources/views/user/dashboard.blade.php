@@ -65,23 +65,23 @@
             }
 
             .kos-ctitle {
-                font-size: 11px;
-                font-weight: 500;
+                font-size: 12px;
+                font-weight: 600;
                 color: #111;
                 text-transform: uppercase;
-                letter-spacing: 0.1em;
+                letter-spacing: 0.08em;
             }
 
             .kos-csub {
-                font-size: 11px;
-                font-weight: 300;
-                color: rgba(0, 0, 0, 0.35);
-                margin-top: 1px;
+                font-size: 12px;
+                font-weight: 400;
+                color: rgba(0, 0, 0, 0.4);
+                margin-top: 2px;
             }
 
             .kos-see-all {
-                font-size: 11px;
-                font-weight: 400;
+                font-size: 12px;
+                font-weight: 500;
                 color: rgba(0, 0, 0, 0.4);
                 text-decoration: none;
                 display: inline-flex;
@@ -127,19 +127,19 @@
 
             .kos-msval {
                 font-family: 'DM Serif Display', serif;
-                font-size: 22px;
+                font-size: 26px;
                 color: #111;
                 line-height: 1;
                 font-style: italic;
             }
 
             .kos-mslbl {
-                font-size: 10px;
-                font-weight: 400;
-                color: rgba(0, 0, 0, 0.32);
-                margin-top: 3px;
+                font-size: 11px;
+                font-weight: 500;
+                color: rgba(0, 0, 0, 0.4);
+                margin-top: 4px;
                 text-transform: uppercase;
-                letter-spacing: 0.08em;
+                letter-spacing: 0.07em;
             }
 
             .kos-ci {
@@ -175,8 +175,8 @@
             }
 
             .kos-badge {
-                font-size: 10px;
-                font-weight: 400;
+                font-size: 11px;
+                font-weight: 500;
                 padding: 2px 8px;
                 border-radius: 100px;
                 margin-left: 5px;
@@ -214,8 +214,8 @@
             }
 
             .kos-pipill {
-                font-size: 10px;
-                font-weight: 400;
+                font-size: 11px;
+                font-weight: 500;
                 padding: 3px 9px;
                 border-radius: 100px;
                 display: inline-flex;
@@ -251,18 +251,18 @@
             }
 
             .kos-sid-title {
-                font-size: 11px;
-                font-weight: 500;
-                letter-spacing: 0.1em;
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
                 text-transform: uppercase;
                 color: #fff;
             }
 
             .kos-sid-sub {
-                font-size: 11px;
-                font-weight: 300;
-                color: rgba(255, 255, 255, 0.4);
-                margin-top: 1px;
+                font-size: 12px;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.5);
+                margin-top: 2px;
             }
 
             .kos-srow {
@@ -287,16 +287,16 @@
 
             .kos-srlbl {
                 font-size: 13px;
-                font-weight: 300;
-                color: rgba(0, 0, 0, 0.5);
+                font-weight: 400;
+                color: rgba(0, 0, 0, 0.55);
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
 
             .kos-srval {
-                font-size: 13px;
-                font-weight: 500;
+                font-size: 14px;
+                font-weight: 600;
                 color: #111;
             }
 
@@ -330,20 +330,55 @@
 
             .kos-albl {
                 font-size: 13px;
-                font-weight: 500;
+                font-weight: 600;
                 color: #111;
             }
 
             .kos-asub {
-                font-size: 11px;
-                font-weight: 300;
-                color: rgba(0, 0, 0, 0.35);
-                margin-top: 1px;
+                font-size: 12px;
+                font-weight: 400;
+                color: rgba(0, 0, 0, 0.4);
+                margin-top: 2px;
+            }
+
+            /* ─── RESPONSIVE ─── */
+            @media (max-width: 768px) {
+                .kos-hero-inner {
+                    padding: 28px 20px 0 !important;
+                }
+                .kos-hero-left {
+                    max-width: 100% !important;
+                }
+                .kos-hero-floatcard {
+                    display: none !important;
+                }
+                .kos-stat-strip {
+                    grid-template-columns: repeat(2, 1fr) !important;
+                }
+                .kos-stat-strip > div:nth-child(2) {
+                    border-left: 1px solid rgba(122,226,207,0.2);
+                }
+                .kos-stat-strip > div:nth-child(3) {
+                    border-top: 1px solid rgba(122,226,207,0.2);
+                    border-left: none;
+                }
+                .kos-stat-strip > div:nth-child(4) {
+                    border-top: 1px solid rgba(122,226,207,0.2);
+                    border-left: 1px solid rgba(122,226,207,0.2);
+                }
+                .kos-body-grid {
+                    grid-template-columns: 1fr !important;
+                    padding: 16px 16px 32px !important;
+                    gap: 14px !important;
+                }
+                .kos-hero-name {
+                    font-size: 2rem !important;
+                }
             }
         </style>
 
         {{-- ══════════════ HERO ══════════════ --}}
-        <div style="background:#06202B;padding:44px 40px 0;position:relative;overflow:hidden;">
+        <div class="kos-hero-inner" style="background:#06202B;padding:44px 40px 0;position:relative;overflow:hidden;">
 
             {{-- Background noise --}}
             <div style="position:absolute;inset:0;background-image:url(\" data:image/svg+xml,%3Csvg viewBox='0 0 256 256'
@@ -386,7 +421,7 @@
             </svg>
 
             {{-- Mini Card Status Pembayaran --}}
-            <div style="position:absolute;right:40px;top:38%;transform:translateY(-50%);z-index:2;width:340px;">
+            <div class="kos-hero-floatcard" style="position:absolute;right:40px;top:38%;transform:translateY(-50%);z-index:2;width:340px;">
                 <div
                     style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
                     <div style="display:flex;align-items:stretch;">
@@ -440,15 +475,15 @@
                         {{-- Tengah: info status --}}
                         <div style="flex:1;padding:12px 14px;">
                             <div
-                                style="font-size:9px;font-weight:500;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:3px;">
+                                style="font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:4px;">
                                 Status Pembayaran · {{ now()->translatedFormat('F Y') }}</div>
                             <div
-                                style="font-size:14px;font-weight:500;color:{{ $statusColor }};line-height:1.2;margin-bottom:2px;">
+                                style="font-size:15px;font-weight:500;color:{{ $statusColor }};line-height:1.2;margin-bottom:3px;">
                                 {{ $statusLabel }}
                             </div>
-                            <div style="font-size:10px;color:rgba(255,255,255,0.6);">{{ $statusSub }}</div>
+                            <div style="font-size:11px;color:rgba(255,255,255,0.6);">{{ $statusSub }}</div>
                             <div
-                                style="margin-top:8px;background:{{ $statusBg }};border:1px solid {{ $statusColor }}22;border-radius:5px;padding:4px 8px;font-size:10px;color:{{ $statusColor }};opacity:0.85;">
+                                style="margin-top:8px;background:{{ $statusBg }};border:1px solid {{ $statusColor }}22;border-radius:5px;padding:4px 8px;font-size:11px;color:{{ $statusColor }};opacity:0.85;">
                                 {{ $statusMsg }}
                             </div>
                         </div>
@@ -458,16 +493,16 @@
                             style="width:100px;border-left:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:12px 10px;flex-shrink:0;">
                             <div style="text-align:center;">
                                 <div
-                                    style="font-size:9px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.12em;">
+                                    style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">
                                     Tagihan</div>
                                 <div
-                                    style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.9);font-style:italic;font-family:'DM Serif Display',serif;margin-top:1px;">
+                                    style="font-size:12px;font-weight:500;color:rgba(255,255,255,0.9);font-style:italic;font-family:'DM Serif Display',serif;margin-top:2px;">
                                     Rp {{ number_format(Auth::user()->monthly_rent ?? 0, 0, ',', '.') }}</div>
                             </div>
                             <div style="width:100%;height:1px;background:rgba(255,255,255,0.06);"></div>
                             <div style="text-align:center;">
                                 <div
-                                    style="font-size:9px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.12em;">
+                                    style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.1em;">
                                     {{ now()->translatedFormat('d M') }}
                                 </div>
                                 <div style="font-size:12px;font-weight:400;color:rgba(255,255,255,0.9);margin-top:1px;font-family:monospace;"
@@ -505,22 +540,21 @@
             </script>
 
             {{-- Konten kiri --}}
-            <div style="position:relative;z-index:1;max-width:60%;">
+            <div class="kos-hero-left" style="position:relative;z-index:1;max-width:60%;">
                 <div
-                    style="font-size:10px;font-weight:600;letter-spacing:0.3em;text-transform:uppercase;color:#7AE2CF;margin-bottom:20px;text-shadow:0 0 15px rgba(122,226,207,0.5);">
-                    Pusat Informasi
+                    style="font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:#7AE2CF;margin-bottom:16px;text-shadow:0 0 15px rgba(122,226,207,0.5);">
+                    ✦ Pusat Informasi
                 </div>
                 <div
-                    style="font-size:25px;font-weight:400;color:#FFFFFF;margin-bottom:10px;letter-spacing:0.01em;text-shadow:0 0 20px rgba(255,255,255,0.2);">
-                    Selamat datang 👋
+                    style="font-size:17px;font-weight:400;color:rgba(255,255,255,0.75);margin-bottom:8px;letter-spacing:0.01em;">
+                    Selamat datang kembali 👋
                 </div>
                 @php $nameParts = explode(' ', Auth::user()->name); @endphp
-                <div
-                    style="font-family:'Instrument Serif',Georgia,serif;font-size:2.4rem;color:#FFFFFF;line-height:1.05;margin-bottom:2.0rem;font-weight:400;letter-spacing:-0.5px;text-shadow:0 0 25px rgba(255,255,255,0.1);">
+                <div class="kos-hero-name"
+                    style="font-family:'Instrument Serif',Georgia,serif;font-size:2.6rem;color:#FFFFFF;line-height:1.05;margin-bottom:2rem;font-weight:400;letter-spacing:-0.5px;text-shadow:0 0 25px rgba(255,255,255,0.1);">
                     {{ $nameParts[0] ?? '' }}
                     <span style="font-style:italic;color:#7AE2CF;text-shadow:0 0 15px rgba(122,226,207,0.4);">{{ implode(' ', array_slice($nameParts, 1)) }}</span>
                 </div>
-
 
                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
                     <span class="kos-hchip">
@@ -540,8 +574,8 @@
                 </div>
             </div>
 
-            {{-- Stat Strip (tidak berubah) --}}
-            <div
+            {{-- Stat Strip --}}
+            <div class="kos-stat-strip"
                 style="display:grid;grid-template-columns:repeat(4,1fr);margin-top:32px;border-top:1px solid rgba(122,226,207,0.4);box-shadow:0 -1px 12px rgba(122,226,207,0.15);position:relative;z-index:1;">
                 @php
                     $strips = [
@@ -553,17 +587,17 @@
                 @endphp
                 @foreach($strips as $s)
                     <div
-                        style="padding:22px 24px;{{ !$loop->first ? 'border-left:1px solid rgba(122,226,207,0.2);box-shadow:-1px 0 8px rgba(122,226,207,0.05);' : '' }}">
+                        style="padding:24px 28px;{{ !$loop->first ? 'border-left:1px solid rgba(122,226,207,0.2);' : '' }}">
                         <div
-                            style="font-size:10px;font-weight:500;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:0.18em;margin-bottom:5px;">
+                            style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px;">
                             {{ $s['lbl'] }}
                         </div>
                         <div
-                            style="font-family:'DM Serif Display',serif;font-size:2.4rem;color:{{ $s['color'] }};line-height:1;letter-spacing:-1px;">
+                            style="font-family:'DM Serif Display',serif;font-size:2.6rem;color:{{ $s['color'] }};line-height:1;letter-spacing:-1px;">
                             {{ $s['val'] }}
                         </div>
                         <div
-                            style="font-size:10px;font-weight:400;color:{{ $s['tagcolor'] }};margin-top:6px;letter-spacing:0.05em;">
+                            style="font-size:11px;font-weight:500;color:{{ $s['tagcolor'] }};margin-top:8px;letter-spacing:0.04em;">
                             {{ $s['tag'] }}
                         </div>
                     </div>
@@ -573,7 +607,7 @@
         </div>
 
         {{-- ══════════════ BODY GRID ══════════════ --}}
-        <div style="display:grid;grid-template-columns:1fr 255px;gap:18px;padding:22px 40px 44px;">
+        <div class="kos-body-grid" style="display:grid;grid-template-columns:1fr 255px;gap:18px;padding:22px 40px 44px;">
 
             {{-- LEFT MAIN --}}
             <div>
@@ -637,27 +671,26 @@
                         <a href="{{ route('user.public-complaint-show', $complaint) }}" class="kos-ci">
                             <div class="kos-avatar">{{ strtoupper(substr($complaint->user->name, 0, 1)) }}</div>
                             <div style="flex:1;min-width:0;">
-                                <div style="display:flex;align-items:center;flex-wrap:wrap;gap:2px;">
+                                <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;">
                                     <span
-                                        style="font-size:13px;font-weight:500;color:#111;line-height:1.3;">{{ $complaint->subject }}</span>
+                                        style="font-size:14px;font-weight:600;color:#111;line-height:1.4;">{{ $complaint->subject }}</span>
                                     @if($complaint->status === 'resolved')
-                                        <span class="kos-badge" style="background:#E8F8F4;color:#1a9e8a;">Selesai</span>
+                                        <span class="kos-badge" style="background:#E8F8F4;color:#1a9e8a;font-size:11px;">Selesai</span>
                                     @elseif($complaint->status === 'in_progress')
-                                        <span class="kos-badge" style="background:#EDF3FE;color:#3b6fc4;">Diproses</span>
+                                        <span class="kos-badge" style="background:#EDF3FE;color:#3b6fc4;font-size:11px;">Diproses</span>
                                     @else
-                                        <span class="kos-badge" style="background:#FEF0EF;color:#e05c5c;">Kendala</span>
+                                        <span class="kos-badge" style="background:#FEF0EF;color:#e05c5c;font-size:11px;">Menunggu</span>
                                     @endif
                                     @if($complaint->priority === 'high')
-                                        <span class="kos-badge" style="background:#FFF3E0;color:#c97b1a;">Urgent</span>
+                                        <span class="kos-badge" style="background:#FFF3E0;color:#c97b1a;font-size:11px;">Urgent</span>
                                     @endif
                                 </div>
-                                <div style="font-size:11px;font-weight:300;color:rgba(0,0,0,0.35);margin-top:2px;">
-                                    {{ $complaint->user->name }} ({{ $complaint->user->room_number ?? 'No Room' }}) ·
-                                    {{ $complaint->category_label }}
+                                <div style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);margin-top:3px;">
+                                    {{ $complaint->user->name }} · Kamar {{ $complaint->user->room_number ?? '-' }} · {{ $complaint->category_label }}
                                 </div>
                                 <div
-                                    style="font-size:12px;font-weight:300;color:rgba(0,0,0,0.5);margin-top:4px;line-height:1.6;">
-                                    {{ Str::limit($complaint->description, 100) }}
+                                    style="font-size:13px;font-weight:400;color:rgba(0,0,0,0.55);margin-top:5px;line-height:1.6;">
+                                    {{ Str::limit($complaint->description, 110) }}
                                 </div>
                                 @if($complaint->admin_response)
                                     <div class="kos-admin-box">
@@ -735,10 +768,8 @@
                                 @endif
                             </div>
                             <div style="flex:1;">
-                                <div style="font-size:13px;font-weight:500;color:#111;">Rp
-                                    {{ number_format($payment->amount, 0, ',', '.') }}
-                                </div>
-                                <div style="font-size:11px;font-weight:300;color:rgba(0,0,0,0.35);margin-top:1px;">
+                                <div style="font-size:14px;font-weight:600;color:#111;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</div>
+                                <div style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);margin-top:2px;">
                                     {{ $payment->payment_date->format('d F Y') }}
                                 </div>
                             </div>

@@ -165,34 +165,15 @@
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <!-- User Profile Dropdown -->
-                    <div class="relative" x-data="{ profileOpen: false }">
-                        <button @click="profileOpen = !profileOpen" @click.away="profileOpen = false"
-                            class="flex items-center space-x-3 focus:outline-none">
-                            <div class="text-right hidden sm:block">
-                                <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Admin</p>
-                                <p class="text-sm font-bold text-gray-900">{{ Auth::user()->name }}</p>
-                            </div>
-                            <div
-                                class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-md">
-                                {{ substr(Auth::user()->name, 0, 1) }}
-                            </div>
-                        </button>
-
-                        <!-- Dropdown Menu -->
-                        <div x-show="profileOpen" x-transition.opacity
-                            class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-1 border border-gray-100 z-50">
-                            <div class="px-4 py-3 border-b border-gray-100 sm:hidden">
-                                <p class="text-sm font-bold text-gray-900">{{ Auth::user()->name }}</p>
-                                <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
-                            </div>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit"
-                                    class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-150">
-                                    Logout
-                                </button>
-                            </form>
+                    <!-- User Profile Display -->
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right hidden sm:block">
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Admin</p>
+                            <p class="text-sm font-bold text-gray-900">{{ Auth::user()->name }}</p>
+                        </div>
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-md cursor-default">
+                            {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     </div>
                 </div>

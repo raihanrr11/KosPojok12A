@@ -10,11 +10,14 @@ class AdminMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * Only allow users with the 'admin' role to proceed.
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check() || !auth()->user()->isAdmin()) {
+            abort(403, 'Unauthorized. Admin access required.');
+        }
+
         return $next($request);
     }
 }

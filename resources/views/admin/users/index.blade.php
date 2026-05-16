@@ -1,9 +1,9 @@
 @extends('admin.layout')
 
 @section('content')
-    <div class="space-y-6" x-data="{ deleteModal: false, deleteTarget: { name: '', formId: '' } }">
+    <div class="w-full space-y-6" x-data="{ deleteModal: false, deleteTarget: { name: '', formId: '' } }">
         <!-- Header dengan Gradient Background -->
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 shadow-xl">
+        <div class="w-full relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 p-8 shadow-xl">
             <div class="relative z-10 sm:flex sm:items-center sm:justify-between">
                 <div>
                     <h1 class="text-3xl font-bold text-white">Manajemen Penghuni</h1>
@@ -24,11 +24,25 @@
             <div class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-40 rounded-full bg-white opacity-5"></div>
         </div>
 
+        {{-- Filter Tabs --}}
+        <div class="w-full bg-white rounded-xl shadow-md overflow-hidden">
+            <nav class="flex flex-col sm:flex-row gap-2 p-2">
+                <a href="{{ route('admin.users') }}"
+                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == null ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Penghuni Aktif</a>
+                <a href="{{ route('admin.users') }}?status=deleted"
+                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == 'deleted' ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Pindah / Dihapus</a>
+            </nav>
+        </div>
+
         <!-- Users List dengan Modern Cards -->
-        <div class="grid grid-cols-1 gap-6">
+        <div class="w-full grid grid-cols-1 gap-6">
             @forelse($users as $user)
                 <div
-                    class="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden">
+                    class="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden relative">
+                    
+                    <!-- Stretched link for the entire card -->
+                    <a href="{{ route('admin.users.show', $user->id) }}" class="absolute inset-0 z-0" aria-label="Lihat detail"></a>
+                    
                     <div class="p-6">
                         <div class="flex items-start justify-between">
                             <!-- User Info -->
@@ -53,15 +67,25 @@
                                             class="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-200">
                                             {{ $user->name }}
                                         </h3>
-                                        <span
-                                            class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 shadow-sm">
-                                            <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                                <path
-                                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
-                                                </path>
-                                            </svg>
-                                            Kamar {{ $user->room_number ?? 'No Room' }}
-                                        </span>
+                                        @if($user->trashed())
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-red-100 to-pink-100 text-red-800 shadow-sm">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                                </svg>
+                                                Pindah / Dihapus
+                                            </span>
+                                        @else
+                                            <span
+                                                class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 shadow-sm">
+                                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path
+                                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
+                                                    </path>
+                                                </svg>
+                                                Kamar {{ $user->room_number ?? 'No Room' }}
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <!-- Contact Info dengan Icons -->
@@ -135,30 +159,32 @@
                             </div>
 
                             <!-- Action Buttons -->
-                            <div class="flex flex-col space-y-2 ml-4">
-                                <a href="{{ route('admin.users.edit', $user) }}"
-                                    class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-                                    <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                    </svg>
-                                    Edit
-                                </a>
-                                <form id="delete-user-{{ $user->id }}" method="POST"
-                                    action="{{ route('admin.users.destroy', $user) }}" class="hidden">
-                                    @csrf
-                                    @method('DELETE')
-                                </form>
-                                <button type="button"
-                                    @click="deleteTarget = { name: '{{ addslashes($user->name) }}', formId: 'delete-user-{{ $user->id }}' }; deleteModal = true"
-                                    class="w-full inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300">
-                                    <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                    Hapus
-                                </button>
-                            </div>
+                            @if(!$user->trashed())
+                                <div class="flex flex-col space-y-2 ml-4 relative z-10">
+                                    <a href="{{ route('admin.users.edit', $user) }}"
+                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
+                                        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        Edit
+                                    </a>
+                                    <form id="delete-user-{{ $user->id }}" method="POST"
+                                        action="{{ route('admin.users.destroy', $user) }}" class="hidden">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                    <button type="button"
+                                        @click="deleteTarget = { name: '{{ addslashes($user->name) }}', formId: 'delete-user-{{ $user->id }}' }; deleteModal = true"
+                                        class="w-full inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 transform hover:scale-105 transition-all duration-300">
+                                        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        </svg>
+                                        Hapus
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
 

@@ -34,6 +34,54 @@
             </div>
         </div>
 
+        <!-- Soft Status Filter Bar -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 mb-8">
+            <div class="bg-white rounded-[2.5rem] p-2 shadow-sm border border-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <!-- Pending -->
+                    <a href="{{ route('user.public-complaints', ['status' => 'pending']) }}" 
+                       class="flex items-center justify-between px-6 py-4 rounded-[1.75rem] transition-all duration-300 group {{ request('status') == 'pending' ? 'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-200' : 'bg-gray-50 text-gray-400 hover:bg-amber-50 hover:text-amber-700 hover:ring-1 hover:ring-inset hover:ring-amber-200' }}">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-amber-500 mr-3 {{ request('status') == 'pending' ? 'animate-pulse' : 'opacity-40 group-hover:opacity-100' }}"></div>
+                            <span class="text-xs font-black uppercase tracking-widest">Pending</span>
+                        </div>
+                        <span class="{{ request('status') == 'pending' ? 'bg-white text-amber-600 shadow-sm' : 'bg-white text-gray-400 group-hover:text-amber-600 shadow-sm' }} text-[10px] font-black px-3 py-1 rounded-xl transition-colors duration-500">{{ $counts['pending'] }}</span>
+                    </a>
+
+                    <!-- In Progress -->
+                    <a href="{{ route('user.public-complaints', ['status' => 'in_progress']) }}" 
+                       class="flex items-center justify-between px-6 py-4 rounded-[1.75rem] transition-all duration-300 group {{ request('status') == 'in_progress' ? 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-200' : 'bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-700 hover:ring-1 hover:ring-inset hover:ring-blue-200' }}">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-blue-600 mr-3 {{ request('status') == 'in_progress' ? 'animate-pulse' : 'opacity-40 group-hover:opacity-100' }}"></div>
+                            <span class="text-xs font-black uppercase tracking-widest">In Progress</span>
+                        </div>
+                        <span class="{{ request('status') == 'in_progress' ? 'bg-white text-blue-600 shadow-sm' : 'bg-white text-gray-400 group-hover:text-blue-600 shadow-sm' }} text-[10px] font-black px-3 py-1 rounded-xl transition-colors duration-500">{{ $counts['in_progress'] }}</span>
+                    </a>
+
+                    <!-- Completed -->
+                    <a href="{{ route('user.public-complaints', ['status' => 'completed']) }}" 
+                       class="flex-1 flex items-center justify-between px-6 py-4 rounded-[1.75rem] transition-all duration-300 group {{ request('status') == 'completed' ? 'bg-green-50 text-green-700 ring-1 ring-inset ring-green-200' : 'bg-gray-50 text-gray-400 hover:bg-green-50 hover:text-green-700 hover:ring-1 hover:ring-inset hover:ring-green-200' }}">
+                        <div class="flex items-center">
+                            <div class="w-2 h-2 rounded-full bg-green-500 mr-3 {{ request('status') == 'completed' ? 'animate-pulse' : 'opacity-40 group-hover:opacity-100' }}"></div>
+                            <span class="text-xs font-black uppercase tracking-widest">Completed</span>
+                        </div>
+                        <span class="{{ request('status') == 'completed' ? 'bg-white text-green-600 shadow-sm' : 'bg-white text-gray-400 group-hover:text-green-600 shadow-sm' }} text-[10px] font-black px-3 py-1 rounded-xl transition-colors duration-500">{{ $counts['completed'] }}</span>
+                    </a>
+                </div>
+            </div>
+            
+            @if(request('status'))
+                <div class="mt-4 flex justify-end">
+                    <a href="{{ route('user.public-complaints') }}" class="text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors flex items-center bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-100">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Tampilkan Semua
+                    </a>
+                </div>
+            @endif
+        </div>
+
         <!-- Complaints Grid -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

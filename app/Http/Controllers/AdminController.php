@@ -84,10 +84,36 @@ class AdminController extends Controller
     }
 
     // User Management
-    public function users()
+    public function users(Request $request)
     {
-        $users = User::where('role', 'user')->paginate(10);
+        $query = User::where('role', 'user');
+
+        if ($request->status === 'deleted') {
+            $query->onlyTrashed();
+        }
+
+        $users = $query->orderByRaw('CAST(room_number AS UNSIGNED) ASC')->paginate(10)->withQueryString();
         return view('admin.users.index', compact('users'));
+    }
+
+    public function userShow(User $user)
+    {
+        if ($user->role !== 'user') {
+            abort(404);
+        }
+
+        $payments = [];
+        $complaints = [];
+
+        if (Schema::hasTable('payments')) {
+            $payments = Payment::where('user_id', $user->id)->latest()->take(5)->get();
+        }
+
+        if (Schema::hasTable('complaints')) {
+            $complaints = Complaint::where('user_id', $user->id)->latest()->take(5)->get();
+        }
+
+        return view('admin.users.show', compact('user', 'payments', 'complaints'));
     }
 
     public function userCreate()
@@ -100,12 +126,12 @@ class AdminController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => ['required', 'string', 'email', 'max:255', \Illuminate\Validation\Rule::unique('users')->whereNull('deleted_at')],
             'password' => 'required|string|min:8',
             'photo' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'room_number' => 'required|string|max:10|unique:users',
+            'room_number' => ['required', 'string', 'max:10', \Illuminate\Validation\Rule::unique('users')->whereNull('deleted_at')],
             'monthly_rent' => 'required|numeric|min:0',
             'date_of_birth' => 'nullable|date',
             'emergency_contact' => 'nullable|string',
@@ -114,9 +140,7 @@ class AdminController extends Controller
         // handle photo
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $photoPath = $file->storeAs('user-photos', $filename, 'public');
+            $photoPath = $request->file('photo')->store('user-photos', 'public');
         }
 
         $user = User::create([
@@ -182,10 +206,10 @@ class AdminController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'email' => ['required', 'string', 'email', 'max:255', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'room_number' => 'required|string|max:10|unique:users,room_number,' . $user->id,
+            'room_number' => ['required', 'string', 'max:10', \Illuminate\Validation\Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
             'monthly_rent' => 'required|numeric|min:0',
             'date_of_birth' => 'nullable|date',
             'emergency_contact' => 'nullable|string',
@@ -197,9 +221,7 @@ class AdminController extends Controller
                 Storage::disk('public')->delete($user->photo);
             }
 
-            $file = $request->file('photo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $validated['photo'] = $file->storeAs('user-photos', $filename, 'public');
+            $validated['photo'] = $request->file('photo')->store('user-photos', 'public');
         }
 
         $oldRoomNumber = $user->room_number;
@@ -228,10 +250,6 @@ class AdminController extends Controller
     {
         if ($user->role !== 'user') {
             abort(404);
-        }
-
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
         }
 
         $user->delete();

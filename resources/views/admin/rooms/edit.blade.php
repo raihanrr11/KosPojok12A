@@ -34,12 +34,33 @@
                         </div>
                         @error('price') <p class="text-sm text-red-600 mt-1 ml-1">{{ $message }}</p> @enderror
                     </div>
+
+                    <!-- Status -->
+                    <div class="space-y-2">
+                        <label for="status" class="text-sm font-bold text-gray-700 ml-1">Status Kamar</label>
+                        <select name="status" id="status" required
+                            class="block w-full rounded-2xl border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 transition-all duration-300">
+                            <option value="available" {{ old('status', $room->status) == 'available' ? 'selected' : '' }}>Tersedia</option>
+                            <option value="occupied" {{ old('status', $room->status) == 'occupied' ? 'selected' : '' }}>Terisi</option>
+                            <option value="maintenance" {{ old('status', $room->status) == 'maintenance' ? 'selected' : '' }}>Perbaikan</option>
+                        </select>
+                        @error('status') <p class="text-sm text-red-600 mt-1 ml-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- Facilities -->
+                    <div class="space-y-2">
+                        <label for="facilities" class="text-sm font-bold text-gray-700 ml-1">Fasilitas (Pisahkan dengan koma)</label>
+                        <input type="text" name="facilities" id="facilities" value="{{ old('facilities', $facilitiesStr ?? '') }}"
+                            placeholder="Contoh: Kasur, Lemari, WiFi"
+                            class="block w-full rounded-2xl border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 transition-all duration-300">
+                        @error('facilities') <p class="text-sm text-red-600 mt-1 ml-1">{{ $message }}</p> @enderror
+                    </div>
                 </div>
 
                 <!-- Description -->
                 <div class="space-y-2">
                     <label for="description" class="text-sm font-bold text-gray-700 ml-1">Deskripsi & Fasilitas</label>
-                    <textarea name="description" id="description" rows="4" required
+                    <textarea name="description" id="description" rows="4"
                         class="block w-full rounded-2xl border-gray-200 bg-gray-50 px-4 py-3 text-gray-900 focus:border-indigo-500 focus:ring-indigo-500 transition-all duration-300 resize-none">{{ old('description', $room->description) }}</textarea>
                     @error('description') <p class="text-sm text-red-600 mt-1 ml-1">{{ $message }}</p> @enderror
                 </div>

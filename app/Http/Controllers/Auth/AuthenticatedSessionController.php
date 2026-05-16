@@ -43,22 +43,23 @@ class AuthenticatedSessionController extends Controller
             'role' => $user->role ?? 'no_role'
         ]);
         
-        // Check role and redirect
+        // Check role and redirect — do NOT use intended() here,
+        // as a cached intended URL could send an admin to a user route.
         if (isset($user->role)) {
             if ($user->role === 'admin') {
                 \Log::info('Redirecting to admin dashboard');
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect()->route('admin.dashboard');
             }
-            
+
             if ($user->role === 'user') {
                 \Log::info('Redirecting to user dashboard');
-                return redirect()->intended(route('user.dashboard'));
+                return redirect()->route('user.dashboard');
             }
         }
-        
+
         // Fallback redirect
         \Log::info('Fallback redirect to home');
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
     }
 
     /**

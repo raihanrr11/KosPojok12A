@@ -22,15 +22,13 @@
 <body class="font-sans antialiased bg-kos-cream">
     <div class="min-h-screen flex flex-col">
         <!-- Navigation (sticky) -->
-        <nav class="sticky top-0 z-50 bg-kos-mint border-b border-kos-teal/30 shadow-md"
-            x-data="{ mobileOpen: false }">
+        <nav class="sticky top-0 z-50 bg-kos-mint border-b border-kos-teal/30 shadow-md" x-data="{ mobileOpen: false }">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="flex justify-between h-[80px]">
                     <div class="flex">
                         <!-- Brand -->
                         <div class="shrink-0 flex items-center">
-                            <a href="{{ route('user.dashboard') }}"
-                                class="flex items-center space-x-2 group">
+                            <a href="{{ route('user.dashboard') }}" class="flex items-center space-x-2 group">
                                 <div
                                     class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg flex items-center justify-center shadow transform group-hover:rotate-6 transition-transform duration-300">
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
@@ -356,25 +354,30 @@
             {{-- Main Content --}}
             @yield('content')
         </main>
-        
+
         <!-- Footer / Copyright Bar -->
         <footer class="bg-kos-dark border-t border-kos-mint/10 py-12 mt-auto mt-20">
             <div class="max-w-7xl mx-auto px-6 lg:px-8">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-8">
                     <div class="flex items-center space-x-4">
-                        <div class="w-10 h-10 bg-kos-mint rounded-xl flex items-center justify-center shadow-lg shadow-kos-mint/20">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        <div
+                            class="w-10 h-10 bg-kos-mint rounded-xl flex items-center justify-center shadow-lg shadow-kos-mint/20">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
                         </div>
                         <div>
-                            <span class="block text-sm font-black text-white tracking-[0.2em] uppercase">Kos Pojok 12A</span>
-                            <span class="block text-[10px] font-bold text-kos-mint/60 tracking-widest uppercase mt-0.5">Premium Living Space</span>
+                            <span class="block text-sm font-black text-white tracking-[0.2em] uppercase">Kos Pojok
+                                12A</span>
+                            <span
+                                class="block text-[10px] font-bold text-kos-mint/60 tracking-widest uppercase mt-0.5">Premium
+                                Living Space</span>
                         </div>
                     </div>
-                    
+
                     <div class="text-center md:text-right">
                         <p class="text-[11px] font-black text-gray-500 tracking-[0.15em] uppercase leading-relaxed">
-                            &copy; {{ date('Y') }} <span class="text-kos-mint">Kos Pojok 12A</span>. 
+                            &copy; {{ date('Y') }} <span class="text-kos-mint">Kos Pojok 12A</span>.
                             <br class="md:hidden">
                             All Rights Reserved.
                         </p>
