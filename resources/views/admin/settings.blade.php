@@ -7,7 +7,7 @@
         <div
             class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-8 shadow-xl">
             <div class="relative z-10">
-                <h1 class="text-3xl font-bold text-white">Pengaturan Kos</h1>
+                <h1 class="text-3xl font-bold text-white">Pengaturan Profile Kos</h1>
                 <p class="mt-2 text-indigo-100">Kelola informasi dan detail kos yang ditampilkan kepada penghuni</p>
             </div>
             <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white opacity-10"></div>

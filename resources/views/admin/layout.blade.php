@@ -124,7 +124,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>Pengaturan</span>
+                    <span>Profile Kos</span>
                 </a>
             </nav>
 
@@ -142,8 +142,8 @@
                     </button>
                 </form>
 
-                <p class="text-[10px] text-center text-gray-400 font-bold tracking-widest uppercase px-2">
-                    &copy; {{ date('Y') }} Kos Pojok 12A
+                <p class="text-[8px] text-center text-gray-400 font-bold tracking-widest uppercase px-2">
+                    &copy; {{ date('Y') }} Kos Pojok 12A. All Rights Reserved
                 </p>
             </div>
         </aside>

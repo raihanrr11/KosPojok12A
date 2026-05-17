@@ -12,7 +12,7 @@
                 {{-- Badge --}}
                 <span
                     style="background: rgba(43,213,187,0.12); color: #2BD5BB; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 999px; border: 0.5px solid rgba(43,213,187,0.3);">
-                    Info Kos
+                    Profile Kos
                 </span>
                 {{-- Nama Kos --}}
                 <h1
@@ -51,11 +51,11 @@
             {{-- Divider Label --}}
             @php
                 $divider = fn($label) => '
-                                <div style="display:flex;align-items:center;gap:12px;margin:24px 0 12px;">
-                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
-                                    <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1D9E75;">' . $label . '</span>
-                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
-                                </div>';
+                                                <div style="display:flex;align-items:center;gap:12px;margin:24px 0 12px;">
+                                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
+                                                    <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1D9E75;">' . $label . '</span>
+                                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
+                                                </div>';
             @endphp
 
             {!! $divider('Lokasi & Jam') !!}

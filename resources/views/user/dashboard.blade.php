@@ -1,7 +1,7 @@
 @extends('user.layout')
 
 @section('content')
-    <div style="font-family:'DM Sans',sans-serif; background:#F5EEDD; margin-top:-2rem;">
+    <div class="kos-dashboard-container" style="font-family:'DM Sans',sans-serif; background:#F5EEDD; margin-top:-2rem;">
 
         <style>
             @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
@@ -130,7 +130,6 @@
                 font-size: 26px;
                 color: #111;
                 line-height: 1;
-                font-style: italic;
             }
 
             .kos-mslbl {
@@ -343,34 +342,57 @@
 
             /* ─── RESPONSIVE ─── */
             @media (max-width: 768px) {
-                .kos-hero-inner {
-                    padding: 28px 20px 0 !important;
+                .kos-dashboard-container {
+                    margin-top: 0 !important;
                 }
+
+                .kos-hero-inner {
+                    padding: 40px 20px 0 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                }
+
                 .kos-hero-left {
                     max-width: 100% !important;
+                    order: 1 !important;
                 }
+
                 .kos-hero-floatcard {
-                    display: none !important;
+                    position: relative !important;
+                    right: auto !important;
+                    top: auto !important;
+                    transform: none !important;
+                    width: 100% !important;
+                    margin-top: 24px !important;
+                    order: 2 !important;
                 }
+
                 .kos-stat-strip {
                     grid-template-columns: repeat(2, 1fr) !important;
+                    order: 3 !important;
+                    margin-top: 28px !important;
                 }
-                .kos-stat-strip > div:nth-child(2) {
-                    border-left: 1px solid rgba(122,226,207,0.2);
+
+                .kos-stat-strip>div:nth-child(2) {
+                    border-left: 1px solid rgba(122, 226, 207, 0.2);
                 }
-                .kos-stat-strip > div:nth-child(3) {
-                    border-top: 1px solid rgba(122,226,207,0.2);
+
+                .kos-stat-strip>div:nth-child(3) {
+                    border-top: 1px solid rgba(122, 226, 207, 0.2);
                     border-left: none;
                 }
-                .kos-stat-strip > div:nth-child(4) {
-                    border-top: 1px solid rgba(122,226,207,0.2);
-                    border-left: 1px solid rgba(122,226,207,0.2);
+
+                .kos-stat-strip>div:nth-child(4) {
+                    border-top: 1px solid rgba(122, 226, 207, 0.2);
+                    border-left: 1px solid rgba(122, 226, 207, 0.2);
                 }
+
                 .kos-body-grid {
                     grid-template-columns: 1fr !important;
                     padding: 16px 16px 32px !important;
                     gap: 14px !important;
                 }
+
                 .kos-hero-name {
                     font-size: 2rem !important;
                 }
@@ -421,7 +443,8 @@
             </svg>
 
             {{-- Mini Card Status Pembayaran --}}
-            <div class="kos-hero-floatcard" style="position:absolute;right:40px;top:38%;transform:translateY(-50%);z-index:2;width:340px;">
+            <div class="kos-hero-floatcard"
+                style="position:absolute;right:40px;top:38%;transform:translateY(-50%);z-index:2;width:340px;">
                 <div
                     style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
                     <div style="display:flex;align-items:stretch;">
@@ -553,7 +576,8 @@
                 <div class="kos-hero-name"
                     style="font-family:'Instrument Serif',Georgia,serif;font-size:2.6rem;color:#FFFFFF;line-height:1.05;margin-bottom:2rem;font-weight:400;letter-spacing:-0.5px;text-shadow:0 0 25px rgba(255,255,255,0.1);">
                     {{ $nameParts[0] ?? '' }}
-                    <span style="font-style:italic;color:#7AE2CF;text-shadow:0 0 15px rgba(122,226,207,0.4);">{{ implode(' ', array_slice($nameParts, 1)) }}</span>
+                    <span
+                        style="font-style:italic;color:#7AE2CF;text-shadow:0 0 15px rgba(122,226,207,0.4);">{{ implode(' ', array_slice($nameParts, 1)) }}</span>
                 </div>
 
                 <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -586,8 +610,7 @@
                     ];
                 @endphp
                 @foreach($strips as $s)
-                    <div
-                        style="padding:24px 28px;{{ !$loop->first ? 'border-left:1px solid rgba(122,226,207,0.2);' : '' }}">
+                    <div style="padding:24px 28px;{{ !$loop->first ? 'border-left:1px solid rgba(122,226,207,0.2);' : '' }}">
                         <div
                             style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:8px;">
                             {{ $s['lbl'] }}
@@ -675,18 +698,23 @@
                                     <span
                                         style="font-size:14px;font-weight:600;color:#111;line-height:1.4;">{{ $complaint->subject }}</span>
                                     @if($complaint->status === 'resolved')
-                                        <span class="kos-badge" style="background:#E8F8F4;color:#1a9e8a;font-size:11px;">Selesai</span>
+                                        <span class="kos-badge"
+                                            style="background:#E8F8F4;color:#1a9e8a;font-size:11px;">Selesai</span>
                                     @elseif($complaint->status === 'in_progress')
-                                        <span class="kos-badge" style="background:#EDF3FE;color:#3b6fc4;font-size:11px;">Diproses</span>
+                                        <span class="kos-badge"
+                                            style="background:#EDF3FE;color:#3b6fc4;font-size:11px;">Diproses</span>
                                     @else
-                                        <span class="kos-badge" style="background:#FEF0EF;color:#e05c5c;font-size:11px;">Menunggu</span>
+                                        <span class="kos-badge"
+                                            style="background:#FEF0EF;color:#e05c5c;font-size:11px;">Menunggu</span>
                                     @endif
                                     @if($complaint->priority === 'high')
-                                        <span class="kos-badge" style="background:#FFF3E0;color:#c97b1a;font-size:11px;">Urgent</span>
+                                        <span class="kos-badge"
+                                            style="background:#FFF3E0;color:#c97b1a;font-size:11px;">Urgent</span>
                                     @endif
                                 </div>
                                 <div style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);margin-top:3px;">
-                                    {{ $complaint->user->name }} · Kamar {{ $complaint->user->room_number ?? '-' }} · {{ $complaint->category_label }}
+                                    {{ $complaint->user->name }} · Kamar {{ $complaint->user->room_number ?? '-' }} ·
+                                    {{ $complaint->category_label }}
                                 </div>
                                 <div
                                     style="font-size:13px;font-weight:400;color:rgba(0,0,0,0.55);margin-top:5px;line-height:1.6;">
@@ -768,7 +796,8 @@
                                 @endif
                             </div>
                             <div style="flex:1;">
-                                <div style="font-size:14px;font-weight:600;color:#111;">Rp {{ number_format($payment->amount, 0, ',', '.') }}</div>
+                                <div style="font-size:14px;font-weight:600;color:#111;">Rp
+                                    {{ number_format($payment->amount, 0, ',', '.') }}</div>
                                 <div style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);margin-top:2px;">
                                     {{ $payment->payment_date->format('d F Y') }}
                                 </div>

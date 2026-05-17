@@ -2,28 +2,30 @@
 
 @section('content')
 <div class="space-y-6">
-    <!-- Header Page -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-        <div class="flex items-center space-x-4">
-            <a href="{{ route('admin.users') }}" class="p-2 bg-white rounded-xl shadow-sm text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-            </a>
-            <div>
-                <h1 class="text-2xl font-bold text-gray-900">Detail Penghuni</h1>
-                <p class="text-sm text-gray-500">Melihat detail informasi, pembayaran, dan keluhan</p>
+    <!-- Header Page (Sticky) -->
+    <div class="sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-6 border-b border-gray-100 mb-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('admin.users') }}" class="p-2 bg-white rounded-xl shadow-sm text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </a>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Detail Penghuni</h1>
+                    <p class="text-sm text-gray-500">Melihat detail informasi, pembayaran, dan keluhan</p>
+                </div>
             </div>
+            
+            @if(!$user->trashed())
+                <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                    Edit Penghuni
+                </a>
+            @endif
         </div>
-        
-        @if(!$user->trashed())
-            <a href="{{ route('admin.users.edit', $user) }}" class="inline-flex items-center px-4 py-2 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
-                Edit Penghuni
-            </a>
-        @endif
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -123,9 +125,6 @@
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                 <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                     <h3 class="text-lg font-bold text-gray-900">Pembayaran Terakhir</h3>
-                    @if(Schema::hasTable('payments'))
-                        <a href="{{ route('admin.payments') }}" class="text-sm font-bold text-indigo-600 hover:text-indigo-800">Lihat Semua &rarr;</a>
-                    @endif
                 </div>
                 <div class="divide-y divide-gray-50">
                     @forelse($payments as $payment)
@@ -156,9 +155,6 @@
             <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                 <div class="p-6 border-b border-gray-100 flex justify-between items-center">
                     <h3 class="text-lg font-bold text-gray-900">Keluhan Terakhir</h3>
-                    @if(Schema::hasTable('complaints'))
-                        <a href="{{ route('admin.complaints') }}" class="text-sm font-bold text-pink-600 hover:text-pink-800">Lihat Semua &rarr;</a>
-                    @endif
                 </div>
                 <div class="divide-y divide-gray-50">
                     @forelse($complaints as $complaint)
