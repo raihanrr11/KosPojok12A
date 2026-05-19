@@ -27,9 +27,18 @@
         {{-- Header --}}
         <div
             class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 p-8 shadow-xl">
-            <div class="relative z-10">
+            <div class="relative z-10 pr-48">
                 <h1 class="text-3xl font-bold text-white">Manajemen Pembayaran</h1>
                 <p class="mt-2 text-green-100">Kelola dan verifikasi pembayaran dari seluruh penghuni dengan cepat</p>
+            </div>
+            <div class="absolute top-6 right-6 z-20">
+                <a href="{{ route('admin.payments.all') }}"
+                    class="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    Lihat Semua
+                </a>
             </div>
             <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white opacity-10"></div>
             <div class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-40 rounded-full bg-white opacity-5"></div>
@@ -106,8 +115,8 @@
         {{-- Filter Tabs --}}
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <nav class="flex space-x-2 p-2">
-                <a href="{{ route('admin.payments') }}"
-                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == null ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Semua</a>
+                <a href="{{ route('admin.payments', ['month' => date('n'), 'year' => date('Y')]) }}"
+                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ (request('month') == date('n') && request('year') == date('Y') && request('status') == null) ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Bulan Ini</a>
                 <a href="{{ route('admin.payments') }}?status=pending"
                     class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == 'pending' ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Pending</a>
                 <a href="{{ route('admin.payments') }}?status=verified"

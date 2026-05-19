@@ -2,97 +2,49 @@
 
 @section('content')
     <div class="space-y-6" x-data="{
-                    statusModal: false,
-                    deleteModal: false,
-                    target: { id: '', name: '', status: '', statusLabel: '', formId: '', deleteFormId: '' },
-                    openStatus(id, name, status, statusLabel) {
-                        this.target = { id, name, status, statusLabel, formId: 'status-form-' + id, deleteFormId: 'delete-form-' + id };
-                        this.statusModal = true;
-                    },
-                    openDelete(id, name) {
-                        this.target.id = id; this.target.name = name;
-                        this.target.deleteFormId = 'delete-form-' + id;
-                        this.deleteModal = true;
-                    }
-                }">
+                                    statusModal: false,
+                                    deleteModal: false,
+                                    target: { id: '', name: '', status: '', statusLabel: '', formId: '', deleteFormId: '' },
+                                    openStatus(id, name, status, statusLabel) {
+                                        this.target = { id, name, status, statusLabel, formId: 'status-form-' + id, deleteFormId: 'delete-form-' + id };
+                                        this.statusModal = true;
+                                    },
+                                    openDelete(id, name) {
+                                        this.target.id = id; this.target.name = name;
+                                        this.target.deleteFormId = 'delete-form-' + id;
+                                        this.deleteModal = true;
+                                    }
+                                }">
 
         {{-- Header --}}
         <div
             class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 p-8 shadow-xl">
-            <div class="relative z-10">
+            <div class="relative z-10 pr-48">
                 <h1 class="text-3xl font-bold text-white">Manajemen Keluhan</h1>
                 <p class="mt-2 text-red-100">Kelola dan tanggapi keluhan dari penghuni dengan cepat dan efisien</p>
+            </div>
+            <div class="absolute top-6 right-6 z-20">
+                <a href="{{ route('admin.complaints.all') }}"
+                    class="bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/30 text-white px-4 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    Lihat Semua
+                </a>
             </div>
             <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white opacity-10"></div>
             <div class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-40 rounded-full bg-white opacity-5"></div>
         </div>
 
-        {{-- Date Filters --}}
-        <div class="bg-white rounded-xl shadow-md p-4">
-            <form action="{{ route('admin.complaints') }}" method="GET"
-                class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
-                @if(request('status'))
-                    <input type="hidden" name="status" value="{{ request('status') }}">
-                @endif
-                
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Visibilitas</label>
-                    <select name="visibility" class="w-full rounded-lg border-gray-200 text-sm focus:ring-red-500 focus:border-red-500">
-                        <option value="">Semua</option>
-                        <option value="1" {{ request('visibility') === '1' ? 'selected' : '' }}>Public</option>
-                        <option value="0" {{ request('visibility') === '0' ? 'selected' : '' }}>Private</option>
-                    </select>
-                </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tanggal
-                        Spesifik</label>
-                    <input type="date" name="date" value="{{ request('date') }}"
-                        class="w-full rounded-lg border-gray-200 text-sm focus:ring-red-500 focus:border-red-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Bulan</label>
-                    <select name="month"
-                        class="w-full rounded-lg border-gray-200 text-sm focus:ring-red-500 focus:border-red-500">
-                        <option value="">Semua Bulan</option>
-                        @foreach(range(1, 12) as $m)
-                            <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
-                                {{ date('F', mktime(0, 0, 0, $m, 1)) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tahun</label>
-                    <select name="year"
-                        class="w-full rounded-lg border-gray-200 text-sm focus:ring-red-500 focus:border-red-500">
-                        <option value="">Semua Tahun</option>
-                        @foreach(range(date('Y'), date('Y') - 5) as $y)
-                            <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="flex gap-2">
-                    <button type="submit"
-                        class="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-red-700 transition shadow-lg shadow-red-200">
-                        Filter
-                    </button>
-                    <a href="{{ route('admin.complaints', ['status' => request('status')]) }}"
-                        class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition text-center">
-                        Reset
-                    </a>
-                </div>
-            </form>
-        </div>
 
         {{-- Filter Tabs --}}
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <nav class="flex space-x-2 p-2">
-                <a href="{{ route('admin.complaints') }}"
-                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all {{ request('status') == null ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Semua</a>
+                <a href="{{ route('admin.complaints', ['month' => date('n'), 'year' => date('Y')]) }}"
+                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all {{ (request('month') == date('n') && request('year') == date('Y') && request('status') == null) ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Bulan
+                    Ini</a>
                 <a href="{{ route('admin.complaints') }}?status=open"
                     class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all {{ request('status') == 'open' ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Kendala</a>
                 <a href="{{ route('admin.complaints') }}?status=in_progress"
@@ -170,7 +122,8 @@
                                         </div>
                                         <div class="bg-gray-50/80 p-4 rounded-xl border border-gray-100">
                                             <p class="text-sm text-gray-700 leading-relaxed">
-                                                {{ Str::limit($complaint->description, 150) }}</p>
+                                                {{ Str::limit($complaint->description, 150) }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

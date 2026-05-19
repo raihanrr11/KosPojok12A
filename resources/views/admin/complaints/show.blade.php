@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-5xl mx-auto space-y-6" x-data="{ statusModal: false, newStatus: '{{ $complaint->status }}', newStatusLabel: '' }">
     <!-- Header -->
-    <div class="flex items-center justify-between pb-6 mb-6 border-b border-gray-200">
+    <div class="flex items-center justify-between">
         <div class="flex items-center space-x-4">
             <a href="{{ route('admin.complaints') }}" class="p-2 bg-white rounded-xl shadow-sm border border-gray-100 text-gray-400 hover:text-indigo-600 transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7m0 0l7-7m-7 7h18"/></svg>

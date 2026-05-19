@@ -304,6 +304,36 @@ class AdminController extends Controller
         return view('admin.payments.index', compact('payments'));
     }
 
+    public function paymentsAll(Request $request)
+    {
+        if (!Schema::hasTable('payments')) {
+            return view('admin.payments.all', ['payments' => collect([])]);
+        }
+        
+        $query = Payment::with('user');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('search')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+        }
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->date);
+        }
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $payments = $query->latest()->get();
+        return view('admin.payments.all', compact('payments'));
+    }
+
     public function paymentShow(Payment $payment)
     {
         $payment->load(['user', 'verifiedBy']);
@@ -365,6 +395,34 @@ class AdminController extends Controller
         $complaints->appends($request->query());
 
         return view('admin.complaints.index', compact('complaints'));
+    }
+
+    public function complaintsAll(Request $request)
+    {
+        if (!Schema::hasTable('complaints')) {
+            return view('admin.complaints.all', ['complaints' => collect([])]);
+        }
+        
+        $query = Complaint::with('user');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('visibility')) {
+            $query->where('is_public', $request->visibility);
+        }
+        if ($request->filled('date')) {
+            $query->whereDate('created_at', $request->date);
+        }
+        if ($request->filled('month')) {
+            $query->whereMonth('created_at', $request->month);
+        }
+        if ($request->filled('year')) {
+            $query->whereYear('created_at', $request->year);
+        }
+
+        $complaints = $query->latest()->get();
+        return view('admin.complaints.all', compact('complaints'));
     }
 
     public function complaintShow(Complaint $complaint)

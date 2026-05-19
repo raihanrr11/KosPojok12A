@@ -64,11 +64,13 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         
     // Payment Management
     Route::get('/payments', [AdminController::class, 'payments'])->name('payments');
+    Route::get('/payments/all', [AdminController::class, 'paymentsAll'])->name('payments.all');
     Route::get('/payments/{payment}', [AdminController::class, 'paymentShow'])->name('payments.show');
     Route::patch('/payments/{payment}/verify', [AdminController::class, 'paymentVerify'])->name('payments.verify');
     
     // Complaint Management
     Route::get('/complaints', [AdminController::class, 'complaints'])->name('complaints');
+    Route::get('/complaints/all', [AdminController::class, 'complaintsAll'])->name('complaints.all');
     Route::get('/complaints/{complaint}', [AdminController::class, 'complaintShow'])->name('complaints.show');
     Route::patch('/complaints/{complaint}', [AdminController::class, 'complaintUpdate'])->name('complaints.update');
     Route::delete('/complaints/{complaint}', [AdminController::class, 'complaintDestroy'])->name('complaints.destroy');
