@@ -3,7 +3,7 @@
 @section('content')
 <div class="max-w-4xl mx-auto space-y-6" x-data="{ verifyModal: false, rejectModal: false, rejectReason: '', rejectError: false }">
     <!-- Header with Back Button -->
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between pb-6 mb-6 border-b border-gray-200">
         <div>
             <h2 class="text-2xl font-bold text-gray-900">Detail Pembayaran #{{ $payment->id }}</h2>
             <p class="mt-1 text-sm text-gray-600">Kelola verifikasi pembayaran penghuni kos</p>

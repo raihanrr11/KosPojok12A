@@ -283,6 +283,11 @@ class AdminController extends Controller
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
+        if ($request->filled('search')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+        }
         if ($request->filled('date')) {
             $query->whereDate('created_at', $request->date);
         }
@@ -342,6 +347,9 @@ class AdminController extends Controller
 
         if ($request->filled('status')) {
             $query->where('status', $request->status);
+        }
+        if ($request->filled('visibility')) {
+            $query->where('is_public', $request->visibility);
         }
         if ($request->filled('date')) {
             $query->whereDate('created_at', $request->date);

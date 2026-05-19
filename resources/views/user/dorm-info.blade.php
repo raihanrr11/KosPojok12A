@@ -16,12 +16,12 @@
                 </span>
                 {{-- Nama Kos --}}
                 <h1
-                    style="font-size: 26px; font-weight: 700; color: #2BD5BB; margin: 0; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.2;">
+                    style="font-size: 30px; font-weight: 700; color: #2BD5BB; margin: 0; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.2;">
                     {{ $info['dorm_name'] ?? 'Nama Kos' }}
                 </h1>
                 {{-- Deskripsi --}}
                 @if($info['dorm_description'])
-                    <p style="font-size: 13px; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.7; max-width: 300px;">
+                    <p style="font-size: 18px; color: rgba(255, 255, 255, 1); margin: 0; line-height: 1.7; max-width: 300px;">
                         {{ $info['dorm_description'] }}
                     </p>
                     <p style="font-size: 13px; color: rgba(255,255,255,0.45); margin: 0; line-height: 1.7; max-width: 300px;">
@@ -51,11 +51,11 @@
             {{-- Divider Label --}}
             @php
                 $divider = fn($label) => '
-                                                <div style="display:flex;align-items:center;gap:12px;margin:24px 0 12px;">
-                                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
-                                                    <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1D9E75;">' . $label . '</span>
-                                                    <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
-                                                </div>';
+                                    <div style="display:flex;align-items:center;gap:12px;margin:24px 0 12px;">
+                                        <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
+                                        <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#1D9E75;">' . $label . '</span>
+                                        <hr style="flex:1;border:none;border-top:0.5px solid rgba(0,8,17,0.1);">
+                                    </div>';
             @endphp
 
             {!! $divider('Lokasi & Jam') !!}

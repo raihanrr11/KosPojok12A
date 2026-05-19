@@ -53,11 +53,17 @@
 
         {{-- Date Filters --}}
         <div class="bg-white rounded-xl shadow-md p-4">
-            <form action="{{ route('admin.payments') }}" method="GET" class="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            <form action="{{ route('admin.payments') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                 @if(request('status'))
                     <input type="hidden" name="status" value="{{ request('status') }}">
                 @endif
                 
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Cari Nama</label>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama penghuni..."
+                        class="w-full rounded-lg border-gray-200 text-sm focus:ring-green-500 focus:border-green-500">
+                </div>
+
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tanggal Spesifik</label>
                     <input type="date" name="date" value="{{ request('date') }}" 
