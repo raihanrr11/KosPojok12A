@@ -12,12 +12,12 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Plus Jakarta Sans', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'kos': {
                     'cream': '#F5EEDD',
-                    'mint': '#7AE2CF',
+                    'mint': '#2BD5BB',
                     'teal': '#077A7D',
                     'dark': '#06202B',
                 }

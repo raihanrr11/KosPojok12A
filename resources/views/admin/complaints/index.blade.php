@@ -2,23 +2,23 @@
 
 @section('content')
     <div class="space-y-6" x-data="{
-                                    statusModal: false,
-                                    deleteModal: false,
-                                    target: { id: '', name: '', status: '', statusLabel: '', formId: '', deleteFormId: '' },
-                                    openStatus(id, name, status, statusLabel) {
-                                        this.target = { id, name, status, statusLabel, formId: 'status-form-' + id, deleteFormId: 'delete-form-' + id };
-                                        this.statusModal = true;
-                                    },
-                                    openDelete(id, name) {
-                                        this.target.id = id; this.target.name = name;
-                                        this.target.deleteFormId = 'delete-form-' + id;
-                                        this.deleteModal = true;
-                                    }
-                                }">
+                                                        statusModal: false,
+                                                        deleteModal: false,
+                                                        target: { id: '', name: '', status: '', statusLabel: '', formId: '', deleteFormId: '' },
+                                                        openStatus(id, name, status, statusLabel) {
+                                                            this.target = { id, name, status, statusLabel, formId: 'status-form-' + id, deleteFormId: 'delete-form-' + id };
+                                                            this.statusModal = true;
+                                                        },
+                                                        openDelete(id, name) {
+                                                            this.target.id = id; this.target.name = name;
+                                                            this.target.deleteFormId = 'delete-form-' + id;
+                                                            this.deleteModal = true;
+                                                        }
+                                                    }">
 
         {{-- Header --}}
         <div
-            class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 p-8 shadow-xl">
+            class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-600 via-red-600 to-rose-500 p-8 shadow-xl">
             <div class="relative z-10 pr-48">
                 <h1 class="text-3xl font-bold text-white">Manajemen Keluhan</h1>
                 <p class="mt-2 text-red-100">Kelola dan tanggapi keluhan dari penghuni dengan cepat dan efisien</p>

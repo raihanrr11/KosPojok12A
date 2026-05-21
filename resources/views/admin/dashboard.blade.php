@@ -283,8 +283,8 @@
 
                 // Create a gradient for the line chart area
                 let gradient = ctxRevenue.createLinearGradient(0, 0, 0, 400);
-                gradient.addColorStop(0, 'rgba(99, 102, 241, 0.5)');   // Indigo-500 with opacity
-                gradient.addColorStop(1, 'rgba(99, 102, 241, 0.05)');  // Indigo-500 mostly transparent
+                gradient.addColorStop(0, 'rgba(43, 213, 187, 0.25)');  // Mint with opacity
+                gradient.addColorStop(1, 'rgba(43, 213, 187, 0.0)');   // Transparent
 
                 new Chart(ctxRevenue, {
                     type: 'line',
@@ -293,11 +293,11 @@
                         datasets: [{
                             label: 'Pendapatan',
                             data: chartData.revenue_data,
-                            borderColor: '#6366f1', // Indigo 500
+                            borderColor: '#077A7D', // Brand Teal
                             backgroundColor: gradient,
                             borderWidth: 3,
                             pointBackgroundColor: '#ffffff',
-                            pointBorderColor: '#6366f1',
+                            pointBorderColor: '#077A7D',
                             pointBorderWidth: 2,
                             pointRadius: 4,
                             pointHoverRadius: 6,
@@ -313,6 +313,11 @@
                                 display: false
                             },
                             tooltip: {
+                                backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                                titleColor: '#ffffff',
+                                bodyColor: '#ffffff',
+                                borderColor: 'rgba(255, 255, 255, 0.1)',
+                                borderWidth: 1,
                                 callbacks: {
                                     label: function (context) {
                                         let label = context.dataset.label || '';
@@ -331,10 +336,11 @@
                             y: {
                                 beginAtZero: true,
                                 grid: {
-                                    color: '#f3f4f6', // Gray 100
+                                    color: '#e2e8f0', // Light slate grid line color
                                     drawBorder: false
                                 },
                                 ticks: {
+                                    color: '#475569', // slate-600
                                     callback: function (value, index, values) {
                                         if (value >= 1000000) {
                                             return 'Rp ' + (value / 1000000) + ' Jt';
@@ -349,6 +355,9 @@
                                 grid: {
                                     display: false,
                                     drawBorder: false
+                                },
+                                ticks: {
+                                    color: '#475569' // slate-600
                                 }
                             }
                         }
@@ -365,7 +374,7 @@
                             data: chartData.payment_status_data,
                             backgroundColor: [
                                 '#f59e0b', // Amber 500 (Pending)
-                                '#10b981', // Emerald 500 (Verified)
+                                '#077A7D', // Brand Teal (Verified)
                                 '#ef4444'  // Red 500 (Rejected)
                             ],
                             borderWidth: 0,
@@ -380,6 +389,7 @@
                             legend: {
                                 position: 'bottom',
                                 labels: {
+                                    color: '#475569', // slate-600
                                     padding: 20,
                                     usePointStyle: true,
                                     pointStyle: 'circle'

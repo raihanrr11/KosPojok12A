@@ -92,6 +92,8 @@ class RoomController extends Controller
             $facilities = array_map('trim', explode(',', $validated['facilities']));
         }
 
+        $oldRoomNumber = $room->room_number;
+
         $room->update([
             'room_number' => $validated['room_number'],
             'price' => $validated['price'],
@@ -100,6 +102,16 @@ class RoomController extends Controller
             'description' => $validated['description'],
             'photos' => $photos,
         ]);
+
+        // Jika nomor kamar berubah, ubah nomor kamar penghuni yang ada di kamar lama
+        if ($oldRoomNumber !== $validated['room_number']) {
+            \App\Models\User::where('room_number', $oldRoomNumber)
+                ->update(['room_number' => $validated['room_number']]);
+        }
+
+        // Sinkronisasi harga sewa (monthly_rent) penghuni yang menempati kamar ini
+        \App\Models\User::where('room_number', $validated['room_number'])
+            ->update(['monthly_rent' => $validated['price']]);
 
         return redirect()->route('admin.rooms.index')->with('success', 'Kamar berhasil diperbarui.');
     }

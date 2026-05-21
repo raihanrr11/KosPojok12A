@@ -10,7 +10,9 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800|playfair-display:400i,700,700i|space-grotesk:300,400,500,600&display=swap"
+        rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,10 +20,385 @@
     <!-- Alpine.js CDN (Fallback) -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <!-- Alpine.js Cloak -->
+    <!-- Alpine.js Cloak & Custom Light Theme with Login Brand Accents -->
     <style>
         [x-cloak] {
             display: none !important;
+        }
+
+        /* =========================
+       GLOBAL
+    ========================= */
+        body {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* =========================
+       DARK SIDEBAR
+    ========================= */
+        aside {
+            background: linear-gradient(180deg,
+                    #06202B 0%,
+                    #0B2C38 45%,
+                    #04161D 100%) !important;
+
+            border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+
+            box-shadow:
+                6px 0 24px rgba(0, 0, 0, 0.18),
+                inset -1px 0 0 rgba(255, 255, 255, 0.04) !important;
+        }
+
+        /* =========================
+       HEADER
+    ========================= */
+        header {
+            background-color: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        /* =========================
+       MAIN
+    ========================= */
+        main.bg-gray-50,
+        main {
+            background-color: transparent !important;
+        }
+
+        /* =========================
+       CARD
+    ========================= */
+        .bg-white {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.03),
+                0 2px 4px -1px rgba(0, 0, 0, 0.02) !important;
+        }
+
+        .bg-gray-50 {
+            background-color: #f8fafc !important;
+        }
+
+        /* =========================
+       BORDERS
+    ========================= */
+        .border-gray-100,
+        .border-gray-200,
+        .border-gray-300,
+        .divide-gray-100,
+        .divide-gray-200 {
+            border-color: #e2e8f0 !important;
+            divide-color: #e2e8f0 !important;
+        }
+
+        /* =========================
+       TEXT COLORS
+    ========================= */
+        .text-gray-900 {
+            color: #0f172a !important;
+        }
+
+        .text-gray-800 {
+            color: #1e293b !important;
+        }
+
+        .text-gray-700 {
+            color: #334155 !important;
+        }
+
+        .text-gray-600 {
+            color: #475569 !important;
+        }
+
+        .text-gray-500 {
+            color: #64748b !important;
+        }
+
+        .text-gray-400 {
+            color: #94a3b8 !important;
+        }
+
+        /* =========================
+       SIDEBAR TEXT
+    ========================= */
+        aside .text-black,
+        aside .text-gray-900 {
+            color: #ffffff !important;
+        }
+
+        aside .text-gray-600 {
+            color: #94A3B8 !important;
+        }
+
+        aside .text-gray-400 {
+            color: #64748B !important;
+        }
+
+        aside .border-gray-100 {
+            border-color: rgba(255, 255, 255, 0.06) !important;
+        }
+
+        /* NAVIGATION */
+        aside nav a {
+            transition: all 0.25s ease;
+            color: #94A3B8 !important;
+        }
+
+        /* Hover */
+        aside nav a:hover {
+            background: rgba(43, 213, 187, 0.08) !important;
+            color: #ffffff !important;
+            transform: translateX(2px);
+        }
+
+        aside nav a:hover svg {
+            color: #2BD5BB !important;
+        }
+
+        /* Active menu */
+        aside nav a.bg-gradient-to-r.from-indigo-50 {
+            background: linear-gradient(90deg,
+                    rgba(43, 213, 187, 0.18),
+                    rgba(43, 213, 187, 0.08)) !important;
+
+            color: #2BD5BB !important;
+            border-left: 4px solid #2BD5BB !important;
+            border-radius: 0 14px 14px 0 !important;
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                0 4px 14px rgba(43, 213, 187, 0.12);
+            backdrop-filter: blur(10px);
+        }
+
+        aside nav a.bg-gradient-to-r.from-indigo-50 svg {
+            color: #2BD5BB !important;
+        }
+
+        /* =========================
+       BUTTONS
+    ========================= */
+
+        /* Secondary */
+        a[class*="bg-white border-gray-300"],
+        button[class*="bg-white border-gray-300"],
+        .bg-white.py-2.px-4.border.border-gray-300 {
+            background-color: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            color: #475569 !important;
+        }
+
+        a[class*="bg-white border-gray-300"]:hover,
+        button[class*="bg-white border-gray-300"]:hover,
+        .bg-white.py-2.px-4.border.border-gray-300:hover {
+            background-color: #f8fafc !important;
+            color: #0f172a !important;
+        }
+
+        /* Primary */
+        .bg-indigo-600,
+        .bg-indigo-700,
+        button[type="submit"]:not(.bg-red-600),
+        a[href*="create"][class*="bg-white"],
+        a[class*="text-indigo-600 bg-white"] {
+            background: #2BD5BB !important;
+            color: #06202B !important;
+            font-weight: 700 !important;
+            border: none !important;
+
+            box-shadow:
+                0 4px 12px rgba(43, 213, 187, 0.25) !important;
+        }
+
+        .bg-indigo-600:hover,
+        .bg-indigo-700:hover,
+        button[type="submit"]:not(.bg-red-600):hover,
+        a[href*="create"][class*="bg-white"]:hover,
+        a[class*="text-indigo-600 bg-white"]:hover {
+            background: #23bda6 !important;
+            transform: scale(1.02);
+
+            box-shadow:
+                0 6px 16px rgba(43, 213, 187, 0.35) !important;
+        }
+
+        .bg-indigo-600 svg,
+        .bg-indigo-700 svg,
+        button[type="submit"] svg,
+        a[href*="create"] svg,
+        a[class*="text-indigo-600 bg-white"] svg {
+            color: #06202B !important;
+        }
+
+        /* =========================
+       LOGOUT BUTTON
+    ========================= */
+        aside button[type="submit"] {
+            background: linear-gradient(135deg,
+                    #2BD5BB,
+                    #20B8A2) !important;
+
+            color: #06202B !important;
+
+            font-weight: 700 !important;
+
+            box-shadow:
+                0 8px 20px rgba(43, 213, 187, 0.25) !important;
+        }
+
+        aside button[type="submit"]:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 12px 24px rgba(43, 213, 187, 0.35) !important;
+        }
+
+        /* =========================
+       GRADIENT HEADER
+    ========================= */
+        .bg-gradient-to-r.from-indigo-600,
+        .bg-gradient-to-br.from-indigo-600,
+        .bg-gradient-to-br.from-indigo-500 {
+            background-image: linear-gradient(135deg,
+                    #077A7D,
+                    #06202B) !important;
+
+            border: none !important;
+            color: #ffffff !important;
+
+            box-shadow:
+                0 4px 15px rgba(7, 122, 125, 0.15) !important;
+        }
+
+        .bg-gradient-to-r.from-indigo-600 h1,
+        .bg-gradient-to-br.from-indigo-600 h1,
+        .bg-gradient-to-br.from-indigo-500 h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #ffffff !important;
+        }
+
+        .text-indigo-100 {
+            color: #e2e8f0 !important;
+        }
+
+        /* =========================
+       SECTION HEADER
+    ========================= */
+        .bg-gradient-to-r.from-indigo-50.to-purple-50,
+        .bg-gradient-to-r.from-blue-50.to-cyan-50,
+        .bg-gradient-to-r.from-green-50.to-emerald-50,
+        .bg-gradient-to-r.from-red-50.to-pink-50,
+        .bg-gradient-to-r.from-yellow-50.to-orange-50 {
+            background-image: linear-gradient(to right,
+                    #f8fafc,
+                    #f1f5f9) !important;
+
+            border-bottom: 1px solid #e2e8f0 !important;
+        }
+
+        /* =========================
+       INPUT
+    ========================= */
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        input[type="date"],
+        select,
+        textarea {
+            background-color: #ffffff !important;
+            border: 1px solid #cbd5e1 !important;
+            color: #0f172a !important;
+            border-radius: 12px !important;
+
+            transition: all 0.2s ease-in-out !important;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            background-color: #ffffff !important;
+            border-color: #077A7D !important;
+
+            --tw-ring-color: #077A7D !important;
+
+            box-shadow:
+                0 0 0 2px rgba(7, 122, 125, 0.15) !important;
+        }
+
+        /* =========================
+       TABLE
+    ========================= */
+        table,
+        thead,
+        tbody,
+        tr,
+        th,
+        td {
+            background-color: transparent !important;
+        }
+
+        tr {
+            border-bottom: 1px solid #f1f5f9 !important;
+        }
+
+        tr:hover {
+            background-color: #f8fafc !important;
+        }
+
+        th {
+            background-color: #f8fafc !important;
+            color: #475569 !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+        }
+
+        /* =========================
+       MODAL
+    ========================= */
+        .relative.bg-white.rounded-3xl {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+
+            box-shadow:
+                0 25px 50px -12px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        /* =========================
+       COPYRIGHT
+    ========================= */
+        aside p {
+            color: #64748B !important;
+        }
+
+        /* =========================
+       SCROLLBAR
+    ========================= */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f8fafc;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
         }
     </style>
 
@@ -29,7 +406,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="font-sans antialiased bg-gray-50 text-gray-900 m-0 p-0" x-data="{ sidebarOpen: false }">
+<body class="font-sans antialiased bg-slate-50 text-slate-900 m-0 p-0"
+    style="font-family: 'Plus Jakarta Sans', sans-serif;" x-data="{ sidebarOpen: false }">
     <div class="flex h-screen overflow-hidden">
 
         <!-- Mobile Sidebar Backdrop -->
@@ -38,20 +416,18 @@
 
         <!-- Sidebar -->
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 shadow-sm transition-transform duration-300 lg:translate-x-0 lg:static lg:w-72 flex flex-col">
+            class="fixed inset-y-0 left-0 z-50 w-64 transition-transform duration-300 lg:translate-x-0 lg:static lg:w-72 flex flex-col">
             <!-- Sidebar Header -->
             <div class="h-20 flex items-center justify-between px-6 border-b border-gray-100">
-                <a href="{{ route('admin.dashboard') }}" class="group flex items-center space-x-3">
+                <a href="{{ route('admin.dashboard') }}"
+                    style="font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.3px;"
+                    class="group flex items-center space-x-3 hover:opacity-80 transition">
                     <div
-                        class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
+                        class="w-10 h-10 bg-gradient-to-br from-[#2BD5BB] to-[#20B8A2] text-[#06202B] font-extrabold rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
+                        KP
                     </div>
-                    <span
-                        class="text-xl font-black bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight">
-                        Admin Panel
+                    <span class="text-lg font-black text-white tracking-tight">
+                        Kos Pojok 12A
                     </span>
                 </a>
                 <button @click="sidebarOpen = false"
@@ -124,7 +500,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>Profile Kos</span>
+                    <span>Informasi Kos</span>
                 </a>
             </nav>
 
@@ -172,7 +548,7 @@
                             <p class="text-sm font-bold text-gray-900">{{ Auth::user()->name }}</p>
                         </div>
                         <div
-                            class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold shadow-md cursor-default">
+                            class="w-10 h-10 rounded-xl bg-[#2BD5BB] text-gray-900 font-black shadow-md cursor-default flex items-center justify-center">
                             {{ substr(Auth::user()->name, 0, 1) }}
                         </div>
                     </div>

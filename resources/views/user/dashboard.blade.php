@@ -629,6 +629,50 @@
 
         </div>
 
+        {{-- Announcement Section --}}
+        @php
+            $announcement = \App\Models\Setting::get('dorm_announcement');
+        @endphp
+        @if(!empty($announcement))
+            <div style="background: #F5EEDD; padding: 24px 40px 0;">
+                <div style="background: linear-gradient(180deg, #06202B 0%, #161D22 100%); border-radius: 16px; padding: 20px 28px; position: relative; overflow: hidden; border-left: 4px solid #FF6D00; box-shadow: 0 8px 24px rgba(6,32,43,0.18);">
+                    {{-- Decorative pattern overlay --}}
+                    <div style="position: absolute; right: -20px; bottom: -20px; width: 120px; height: 120px; border-radius: 50%; background: rgba(255,109,0,0.04); pointer-events: none;"></div>
+
+                    <div style="display: flex; align-items: flex-start; gap: 18px; position: relative; z-index: 1;">
+                        <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(255, 109, 0, 0.12); border: 1px solid rgba(255, 109, 0, 0.25); display: flex; align-items: center; justify-content: center; color: #FF8F00; flex-shrink: 0; box-shadow: 0 4px 15px rgba(255,109,0,0.15);">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 10px; font-weight: 800; color: #FF8F00; text-transform: uppercase; letter-spacing: 0.15em; background: rgba(255,109,0,0.12); padding: 3px 8px; border-radius: 6px;">Pengumuman Penting</span>
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: #FF8F00; display: inline-block; animation: pulse 2s infinite;"></span>
+                            </div>
+                            <h3 style="font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.7); margin: 8px 0 6px; letter-spacing: -0.1px;">Informasi dari Pengelola Kos</h3>
+                            <p style="font-size: 18px; color: #FFFFFF; line-height: 1.6; margin: 0; white-space: pre-line; font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">{!! e($announcement) !!}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            <div style="background: #F5EEDD; padding: 24px 40px 0;">
+                <div style="border: 1.5px dashed rgba(6,32,43,0.3); border-radius: 16px; padding: 20px 28px; display: flex; align-items: center; gap: 16px; background: rgba(6,32,43,0.03);">
+                    <div style="width: 44px; height: 44px; border-radius: 12px; background: rgba(6,32,43,0.06); display: flex; align-items: center; justify-content: center; color: rgba(6,32,43,0.5); flex-shrink: 0;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 700; color: rgba(6,32,43,0.7); margin: 0 0 2px;">Pengumuman Kos</h4>
+                        <p style="font-size: 13.5px; color: rgba(6,32,43,0.5); margin: 0; font-weight: 600;">Belum ada pengumuman aktif saat ini.</p>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         {{-- ══════════════ BODY GRID ══════════════ --}}
         <div class="kos-body-grid" style="display:grid;grid-template-columns:1fr 255px;gap:18px;padding:22px 40px 44px;">
 
@@ -797,7 +841,8 @@
                             </div>
                             <div style="flex:1;">
                                 <div style="font-size:14px;font-weight:600;color:#111;">Rp
-                                    {{ number_format($payment->amount, 0, ',', '.') }}</div>
+                                    {{ number_format($payment->amount, 0, ',', '.') }}
+                                </div>
                                 <div style="font-size:12px;font-weight:400;color:rgba(0,0,0,0.45);margin-top:2px;">
                                     {{ $payment->payment_date->format('d F Y') }}
                                 </div>

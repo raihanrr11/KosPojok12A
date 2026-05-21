@@ -43,69 +43,44 @@
             <div class="absolute top-0 right-0 -mt-4 -mr-4 h-32 w-32 rounded-full bg-white opacity-10"></div>
             <div class="absolute bottom-0 left-0 -mb-8 -ml-8 h-40 w-40 rounded-full bg-white opacity-5"></div>
             <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-30">
-                    <div class="text-white text-opacity-90 text-sm font-medium">Total Pembayaran</div>
-                    <div class="text-2xl font-bold text-white mt-1">{{ $payments->total() }}</div>
-                </div>
-                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-30">
-                    <div class="text-white text-opacity-90 text-sm font-medium">Menunggu Verifikasi</div>
-                    <div class="text-2xl font-bold text-white mt-1">{{ $payments->where('status', 'pending')->count() }}
-                    </div>
-                </div>
-                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-30">
-                    <div class="text-white text-opacity-90 text-sm font-medium">Terverifikasi</div>
-                    <div class="text-2xl font-bold text-white mt-1">{{ $payments->where('status', 'verified')->count() }}
-                    </div>
-                </div>
+                <div style="background: rgba(255,255,255,0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.1);"
+    class="rounded-xl p-4">
+    <div class="text-white/80 text-sm font-semibold mb-1">Total Pembayaran</div>
+    <div class="text-2xl font-black text-white mt-1">{{ $payments->total() }}</div>
+</div>
+
+<div style="background: rgba(255,255,255,0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.1);"
+    class="rounded-xl p-4">
+    <div class="text-white/80 text-sm font-semibold mb-1">Menunggu Verifikasi</div>
+    <div class="text-2xl font-black text-white mt-1">{{ $payments->where('status', 'pending')->count() }}</div>
+</div>
+
+<div style="background: rgba(255,255,255,0.12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.25); box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 16px rgba(0,0,0,0.1);"
+    class="rounded-xl p-4">
+    <div class="text-white/80 text-sm font-semibold mb-1">Terverifikasi</div>
+    <div class="text-2xl font-black text-white mt-1">{{ $payments->where('status', 'verified')->count() }}</div>
+</div>
             </div>
         </div>
 
-        {{-- Date Filters --}}
+        {{-- Name Search Filter --}}
         <div class="bg-white rounded-xl shadow-md p-4">
-            <form action="{{ route('admin.payments') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+            <form action="{{ route('admin.payments') }}" method="GET" class="flex flex-col md:flex-row gap-4 items-end">
                 @if(request('status'))
                     <input type="hidden" name="status" value="{{ request('status') }}">
                 @endif
                 
-                <div>
+                <div class="w-full md:flex-1">
                     <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Cari Nama</label>
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama penghuni..."
                         class="w-full rounded-lg border-gray-200 text-sm focus:ring-green-500 focus:border-green-500">
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tanggal Spesifik</label>
-                    <input type="date" name="date" value="{{ request('date') }}" 
-                        class="w-full rounded-lg border-gray-200 text-sm focus:ring-green-500 focus:border-green-500">
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Bulan</label>
-                    <select name="month" class="w-full rounded-lg border-gray-200 text-sm focus:ring-green-500 focus:border-green-500">
-                        <option value="">Semua Bulan</option>
-                        @foreach(range(1, 12) as $m)
-                            <option value="{{ $m }}" {{ request('month') == $m ? 'selected' : '' }}>
-                                {{ date('F', mktime(0, 0, 0, $m, 1)) }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Tahun</label>
-                    <select name="year" class="w-full rounded-lg border-gray-200 text-sm focus:ring-green-500 focus:border-green-500">
-                        <option value="">Semua Tahun</option>
-                        @foreach(range(date('Y'), date('Y') - 5) as $y)
-                            <option value="{{ $y }}" {{ request('year') == $y ? 'selected' : '' }}>{{ $y }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="flex gap-2">
-                    <button type="submit" class="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-green-700 transition shadow-lg shadow-green-200">
-                        Filter
+                <div class="flex gap-2 w-full md:w-auto">
+                    <button type="submit" class="flex-1 md:flex-none bg-green-600 text-white px-6 py-2 rounded-lg font-bold text-sm hover:bg-green-700 transition shadow-lg shadow-green-200">
+                        Cari
                     </button>
-                    <a href="{{ route('admin.payments', ['status' => request('status')]) }}" class="bg-gray-100 text-gray-600 px-4 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition text-center">
+                    <a href="{{ route('admin.payments', ['status' => request('status')]) }}" class="flex-1 md:flex-none bg-gray-100 text-gray-600 px-6 py-2 rounded-lg font-bold text-sm hover:bg-gray-200 transition text-center flex items-center justify-center">
                         Reset
                     </a>
                 </div>
@@ -123,6 +98,8 @@
                     class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == 'verified' ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Terverifikasi</a>
                 <a href="{{ route('admin.payments') }}?status=rejected"
                     class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == 'rejected' ? 'bg-gradient-to-r from-red-500 to-pink-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Ditolak</a>
+                <a href="{{ route('admin.payments') }}?status=unpaid"
+                    class="flex-1 px-4 py-3 rounded-lg font-bold text-sm text-center transition-all duration-300 {{ request('status') == 'unpaid' ? 'bg-gradient-to-r from-gray-500 to-slate-500 text-white shadow-lg' : 'text-gray-600 hover:bg-gray-100' }}">Belum Bayar</a>
             </nav>
         </div>
 
@@ -174,10 +151,14 @@
                                                 <span
                                                     class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800">✗
                                                     Ditolak</span>
-                                            @else
+                                            @elseif($payment->status === 'pending')
                                                 <span
                                                     class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-800 animate-pulse">⏱
                                                     Pending</span>
+                                            @else
+                                                <span
+                                                    class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-800">⚠
+                                                    Belum Bayar</span>
                                             @endif
                                         </div>
                                         <div class="flex items-center space-x-4 text-sm mb-3">
@@ -222,10 +203,17 @@
                                             Tolak
                                         </button>
                                     @endif
-                                    <a href="{{ route('admin.payments.show', $payment) }}"
-                                        class="flex-1 inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-200">
-                                        Detail
-                                    </a>
+                                    @if($payment->status === 'unpaid')
+                                        <a href="{{ route('admin.users.show', $payment->user) }}"
+                                            class="flex-1 inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-all shadow-lg shadow-gray-200">
+                                            Profil
+                                        </a>
+                                    @else
+                                        <a href="{{ route('admin.payments.show', $payment) }}"
+                                            class="flex-1 inline-flex items-center justify-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition-all shadow-lg shadow-indigo-200">
+                                            Detail
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>

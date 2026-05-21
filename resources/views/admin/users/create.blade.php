@@ -172,12 +172,11 @@
                             </div>
 
                             <div>
-                                <label for="monthly_rent" class="block text-sm font-medium text-gray-700">Sewa Bulanan (Rp)
-                                    *</label>
+                                <label for="monthly_rent" class="block text-sm font-medium text-gray-700">Sewa Bulanan (Rp) *</label>
                                 <input type="number" name="monthly_rent" id="monthly_rent" value="{{ old('monthly_rent') }}"
-                                    min="1000"
-                                    class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md @error('monthly_rent') border-red-500 bg-red-50 @enderror">
-                                <p class="mt-1 text-xs text-gray-500">Minimal Rp 1.000</p>
+                                    readonly
+                                    class="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md bg-gray-100 cursor-not-allowed font-semibold text-gray-500 @error('monthly_rent') border-red-500 bg-red-50 @enderror">
+                                <p class="mt-1 text-xs text-gray-500">Harga sewa bulanan otomatis ditentukan oleh harga kamar yang dipilih.</p>
                                 @error('monthly_rent')
                                     <p class="mt-1.5 text-sm text-red-600 font-medium">{{ $message }}</p>
                                 @enderror

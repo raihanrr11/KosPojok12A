@@ -143,6 +143,10 @@ class AdminController extends Controller
             $photoPath = $request->file('photo')->store('user-photos', 'public');
         }
 
+        // Ambil harga sewa dari harga kamar pusat
+        $room = \App\Models\Room::where('room_number', $validated['room_number'])->first();
+        $monthlyRent = $room ? $room->price : $validated['monthly_rent'];
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -152,7 +156,7 @@ class AdminController extends Controller
             'phone' => $validated['phone'] ?? null,
             'address' => $validated['address'] ?? null,
             'room_number' => $validated['room_number'],
-            'monthly_rent' => $validated['monthly_rent'],
+            'monthly_rent' => $monthlyRent,
             'date_of_birth' => $validated['date_of_birth'] ?? null,
             'emergency_contact' => $validated['emergency_contact'] ?? null,
             'email_verified_at' => now(),
@@ -173,8 +177,8 @@ class AdminController extends Controller
             abort(404);
         }
         $availableRooms = \App\Models\Room::where('status', 'available')
-                            ->orWhere('room_number', $user->room_number)
-                            ->get();
+            ->orWhere('room_number', $user->room_number)
+            ->get();
         return view('admin.users.edit', compact('user', 'availableRooms'));
     }
 
@@ -222,6 +226,12 @@ class AdminController extends Controller
             }
 
             $validated['photo'] = $request->file('photo')->store('user-photos', 'public');
+        }
+
+        // Ambil harga sewa dari harga kamar pusat
+        $room = \App\Models\Room::where('room_number', $validated['room_number'])->first();
+        if ($room) {
+            $validated['monthly_rent'] = $room->price;
         }
 
         $oldRoomNumber = $user->room_number;
@@ -278,6 +288,38 @@ class AdminController extends Controller
             return view('admin.payments.index', ['payments' => collect([])]);
         }
 
+        if ($request->status === 'unpaid') {
+            $paidUserIds = Payment::whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->whereIn('status', ['pending', 'verified'])
+                ->pluck('user_id');
+
+            $unpaidUsers = User::where('role', 'user')
+                ->whereNotIn('id', $paidUserIds);
+
+            if ($request->filled('search')) {
+                $unpaidUsers->where('name', 'like', '%' . $request->search . '%');
+            }
+
+            $paginator = $unpaidUsers->paginate(10);
+
+            $paginator->getCollection()->transform(function ($user) {
+                $payment = new Payment([
+                    'amount' => $user->monthly_rent,
+                    'status' => 'unpaid',
+                    'payment_date' => now(),
+                    'payment_method' => '-',
+                ]);
+                $payment->id = 'unpaid-' . $user->id;
+                $payment->setRelation('user', $user);
+                return $payment;
+            });
+            $paginator->appends($request->query());
+            $payments = $paginator;
+
+            return view('admin.payments.index', compact('payments'));
+        }
+
         $query = Payment::with('user');
 
         if ($request->filled('status')) {
@@ -309,7 +351,7 @@ class AdminController extends Controller
         if (!Schema::hasTable('payments')) {
             return view('admin.payments.all', ['payments' => collect([])]);
         }
-        
+
         $query = Payment::with('user');
 
         if ($request->filled('status')) {
@@ -402,7 +444,7 @@ class AdminController extends Controller
         if (!Schema::hasTable('complaints')) {
             return view('admin.complaints.all', ['complaints' => collect([])]);
         }
-        
+
         $query = Complaint::with('user');
 
         if ($request->filled('status')) {
@@ -472,10 +514,18 @@ class AdminController extends Controller
     public function dormSettings()
     {
         $keys = [
-            'dorm_name','dorm_address','dorm_city','dorm_phone',
-            'dorm_email','dorm_whatsapp','dorm_bank_name',
-            'dorm_bank_account_no','dorm_bank_account_name',
-            'dorm_description','dorm_open_hours',
+            'dorm_name',
+            'dorm_address',
+            'dorm_city',
+            'dorm_phone',
+            'dorm_email',
+            'dorm_whatsapp',
+            'dorm_bank_name',
+            'dorm_bank_account_no',
+            'dorm_bank_account_name',
+            'dorm_description',
+            'dorm_open_hours',
+            'dorm_announcement',
         ];
         $settings = [];
         foreach ($keys as $key) {
@@ -486,18 +536,32 @@ class AdminController extends Controller
 
     public function dormSettingsUpdate(Request $request)
     {
+        $formType = $request->input('_form_type', 'settings');
+
+        // ===== FORM PENGUMUMAN SAJA =====
+        if ($formType === 'announcement') {
+            $validated = $request->validate([
+                'dorm_announcement' => 'nullable|string|max:2000',
+            ]);
+
+            Setting::set('dorm_announcement', $validated['dorm_announcement'] ?? '');
+
+            return redirect()->route('admin.settings')->with('success', 'Pengumuman berhasil disimpan!');
+        }
+
+        // ===== FORM INFORMASI KOS =====
         $validated = $request->validate([
-            'dorm_name'             => 'required|string|max:255',
-            'dorm_address'          => 'nullable|string|max:500',
-            'dorm_city'             => 'nullable|string|max:100',
-            'dorm_phone'            => 'nullable|string|max:20',
-            'dorm_email'            => 'nullable|email|max:255',
-            'dorm_whatsapp'         => 'nullable|string|max:20',
-            'dorm_bank_name'        => 'nullable|string|max:100',
-            'dorm_bank_account_no'  => 'nullable|string|max:50',
-            'dorm_bank_account_name'=> 'nullable|string|max:100',
-            'dorm_description'      => 'nullable|string|max:1000',
-            'dorm_open_hours'       => 'nullable|string|max:255',
+            'dorm_name' => 'required|string|max:255',
+            'dorm_address' => 'nullable|string|max:500',
+            'dorm_city' => 'nullable|string|max:100',
+            'dorm_phone' => 'nullable|string|max:20',
+            'dorm_email' => 'nullable|email|max:255',
+            'dorm_whatsapp' => 'nullable|string|max:20',
+            'dorm_bank_name' => 'nullable|string|max:100',
+            'dorm_bank_account_no' => 'nullable|string|max:50',
+            'dorm_bank_account_name' => 'nullable|string|max:100',
+            'dorm_description' => 'nullable|string|max:1000',
+            'dorm_open_hours' => 'nullable|string|max:255',
         ]);
 
         foreach ($validated as $key => $value) {

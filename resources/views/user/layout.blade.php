@@ -10,7 +10,8 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800|space-grotesk:400,500,600,700&display=swap"
+        rel="stylesheet" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,25 +20,23 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body class="font-sans antialiased bg-kos-cream">
+<body class="font-sans antialiased bg-slate-50" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="min-h-screen flex flex-col">
         <!-- Navigation (sticky) -->
-        <nav class="sticky top-0 z-50 bg-kos-mint border-b border-kos-teal/30 shadow-md" x-data="{ mobileOpen: false }">
+        <nav class="sticky top-0 z-50 bg-[#2BD5BB] border-b border-[#077A7D]/20 shadow-sm" x-data="{ mobileOpen: false }">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="flex justify-between h-[80px]">
                     <div class="flex">
                         <!-- Brand -->
                         <div class="shrink-0 flex items-center">
-                            <a href="{{ route('user.dashboard') }}" class="flex items-center space-x-2 group">
+                            <a href="{{ route('user.dashboard') }}"
+                                style="font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.3px;"
+                                class="flex items-center space-x-2 group hover:opacity-80 transition">
                                 <div
-                                    class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-700 rounded-lg flex items-center justify-center shadow transform group-hover:rotate-6 transition-transform duration-300">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                                    </svg>
+                                    class="w-8 h-8 bg-[#06202B] text-white text-xs font-extrabold rounded-lg flex items-center justify-center shadow transform group-hover:rotate-6 transition-transform duration-300">
+                                    KP
                                 </div>
-                                <span class="text-lg font-black text-black tracking-tight">
+                                <span class="text-lg font-black text-[#06202B] tracking-tight">
                                     Kos Pojok 12A
                                 </span>
                             </a>
@@ -46,8 +45,8 @@
                         <!-- Links (desktop) -->
                         <div class="hidden space-x-1 sm:ml-8 sm:flex sm:items-center">
                             <a href="{{ route('user.dashboard') }}"
-                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.dashboard*') ? 'bg-black text-white' : 'text-black' }} hover:text-white hover:bg-black group">
-                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.dashboard*') ? 'text-white' : 'text-black' }} group-hover:text-white"
+                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.dashboard*') ? 'bg-[#06202B] text-white' : 'text-[#06202B]/70' }} hover:text-white hover:bg-[#06202B] group">
+                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.dashboard*') ? 'text-white' : 'text-[#06202B]/50' }} group-hover:text-white"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -55,8 +54,8 @@
                                 Pusat Informasi
                             </a>
                             <a href="{{ route('user.payments') }}"
-                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs(['user.payments*', 'user.payment*']) ? 'bg-black text-white' : 'text-black' }} hover:text-white hover:bg-black group">
-                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs(['user.payments*', 'user.payment*']) ? 'text-white' : 'text-black' }} group-hover:text-white"
+                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs(['user.payments*', 'user.payment*']) ? 'bg-[#06202B] text-white' : 'text-[#06202B]/70' }} hover:text-white hover:bg-[#06202B] group">
+                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs(['user.payments*', 'user.payment*']) ? 'text-white' : 'text-[#06202B]/50' }} group-hover:text-white"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -64,8 +63,8 @@
                                 Pembayaran
                             </a>
                             <a href="{{ route('user.complaints') }}"
-                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.complaints*') ? 'bg-black text-white' : 'text-black' }} hover:text-white hover:bg-black group">
-                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.complaints*') ? 'text-white' : 'text-black' }} group-hover:text-white"
+                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.complaints*') ? 'bg-[#06202B] text-white' : 'text-[#06202B]/70' }} hover:text-white hover:bg-[#06202B] group">
+                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.complaints*') ? 'text-white' : 'text-[#06202B]/50' }} group-hover:text-white"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -73,8 +72,8 @@
                                 Keluhan
                             </a>
                             <a href="{{ route('user.dorm-info') }}"
-                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.dorm-info') ? 'bg-black text-white' : 'text-black' }} hover:text-white hover:bg-black group">
-                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.dorm-info') ? 'text-white' : 'text-black' }} group-hover:text-white"
+                                class="inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 {{ request()->routeIs('user.dorm-info') ? 'bg-[#06202B] text-white' : 'text-[#06202B]/70' }} hover:text-white hover:bg-[#06202B] group">
+                                <svg class="w-4 h-4 mr-1.5 {{ request()->routeIs('user.dorm-info') ? 'text-white' : 'text-[#06202B]/50' }} group-hover:text-white"
                                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />

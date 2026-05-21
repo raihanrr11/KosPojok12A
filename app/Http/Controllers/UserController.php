@@ -21,7 +21,7 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-        
+
         // Stats pribadi user
         $stats = [
             'total_payments' => $user->payments()->count(),
@@ -50,8 +50,8 @@ class UserController extends Controller
         ];
 
         return view('user.dashboard', compact(
-            'stats', 
-            'recent_payments', 
+            'stats',
+            'recent_payments',
             'recent_complaints',
             'public_complaints',
             'public_stats'
@@ -67,10 +67,17 @@ class UserController extends Controller
     public function dormInfo()
     {
         $keys = [
-            'dorm_name','dorm_address','dorm_city','dorm_phone',
-            'dorm_email','dorm_whatsapp','dorm_bank_name',
-            'dorm_bank_account_no','dorm_bank_account_name',
-            'dorm_description','dorm_open_hours',
+            'dorm_name',
+            'dorm_address',
+            'dorm_city',
+            'dorm_phone',
+            'dorm_email',
+            'dorm_whatsapp',
+            'dorm_bank_name',
+            'dorm_bank_account_no',
+            'dorm_bank_account_name',
+            'dorm_description',
+            'dorm_open_hours',
         ];
         $info = [];
         foreach ($keys as $key) {
@@ -95,7 +102,7 @@ class UserController extends Controller
                 'max:100',
                 'regex:/^[a-zA-Z\s]+$/',
             ],
-            
+
             // Email - Format valid dan unique (kecuali email user ini)
             'email' => [
                 'required',
@@ -105,14 +112,14 @@ class UserController extends Controller
                 \Illuminate\Validation\Rule::unique('users')->ignore($user->id)->whereNull('deleted_at'),
                 'regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
             ],
-            
+
             // Password lama (jika ingin ganti password)
             'current_password' => [
                 'nullable',
                 'required_with:password',
                 'string',
             ],
-            
+
             // Password baru
             'password' => [
                 'nullable',
@@ -122,7 +129,7 @@ class UserController extends Controller
                 'confirmed',
                 'regex:/^(?=.*[A-Za-z])(?=.*\d).+$/',
             ],
-            
+
             // No. Telepon
             'phone' => [
                 'nullable',
@@ -131,7 +138,7 @@ class UserController extends Controller
                 'min:10',
                 'max:15',
             ],
-            
+
             // Tanggal Lahir
             'date_of_birth' => [
                 'nullable',
@@ -140,7 +147,7 @@ class UserController extends Controller
                 'before:-17 years',
                 'after:1940-01-01',
             ],
-            
+
             // Kontak Darurat
             'emergency_contact' => [
                 'nullable',
@@ -148,7 +155,7 @@ class UserController extends Controller
                 'max:255',
                 'regex:/^[a-zA-Z0-9\s\-()]+$/',
             ],
-            
+
             // Alamat
             'address' => [
                 'nullable',
@@ -156,7 +163,7 @@ class UserController extends Controller
                 'max:500',
                 'regex:/^[a-zA-Z0-9\s,.\-\/]+$/',
             ],
-            
+
             // Foto
             'photo' => [
                 'nullable',
@@ -169,29 +176,29 @@ class UserController extends Controller
             'name.required' => 'Nama lengkap tidak boleh kosong!',
             'name.regex' => 'Nama lengkap hanya boleh mengandung huruf dan spasi!',
             'name.min' => 'Nama lengkap minimal 3 karakter!',
-            
+
             'email.required' => 'Email tidak boleh kosong!',
             'email.email' => 'Format email tidak valid!',
             'email.unique' => 'Email sudah digunakan oleh pengguna lain!',
             'email.regex' => 'Format email tidak valid!',
-            
+
             'current_password.required_with' => 'Password lama harus diisi jika ingin mengganti password!',
-            
+
             'password.min' => 'Password baru minimal 8 karakter!',
             'password.confirmed' => 'Konfirmasi password tidak cocok!',
             'password.regex' => 'Password harus kombinasi huruf dan angka!',
-            
+
             'phone.regex' => 'Format nomor telepon tidak valid! Gunakan format: 08xxx atau +628xxx',
             'phone.min' => 'Nomor telepon minimal 10 digit!',
             'phone.max' => 'Nomor telepon maksimal 15 digit!',
-            
+
             'date_of_birth.before' => 'Usia minimal 17 tahun!',
             'date_of_birth.after' => 'Tahun lahir tidak valid!',
-            
+
             'emergency_contact.regex' => 'Kontak darurat hanya boleh mengandung huruf, angka, spasi, tanda hubung, dan kurung!',
-            
+
             'address.regex' => 'Alamat mengandung karakter yang tidak diperbolehkan!',
-            
+
             'photo.image' => 'File harus berupa gambar!',
             'photo.mimes' => 'Format foto hanya JPG, JPEG, atau PNG!',
             'photo.max' => 'Ukuran foto maksimal 2MB!',
@@ -207,7 +214,7 @@ class UserController extends Controller
         // Sanitasi data
         $validated['name'] = ucwords(strtolower(trim($validated['name'])));
         $validated['email'] = strtolower(trim($validated['email']));
-        
+
         if (isset($validated['phone'])) {
             $validated['phone'] = str_replace('-', '', $validated['phone']);
         }
@@ -291,7 +298,7 @@ class UserController extends Controller
     {
         $bank_info = [
             'name' => Setting::get('dorm_bank_name'),
-            'no'   => Setting::get('dorm_bank_account_no'),
+            'no' => Setting::get('dorm_bank_account_no'),
             'holder' => Setting::get('dorm_bank_account_name'),
         ];
         return view('user.payments.create', compact('bank_info'));
@@ -307,7 +314,7 @@ class UserController extends Controller
                 'min:1000',
                 'max:100000000',
             ],
-            
+
             // Payment Date - Tidak boleh masa depan
             'payment_date' => [
                 'required',
@@ -315,14 +322,14 @@ class UserController extends Controller
                 'before_or_equal:today',
                 'after:2020-01-01',
             ],
-            
+
             // Payment Method - Hanya pilihan yang valid
             'payment_method' => [
                 'required',
                 'string',
                 'in:cash,bank_transfer,e_wallet,other',
             ],
-            
+
             // Description - Huruf, angka, dan tanda baca
             'description' => [
                 'nullable',
@@ -330,7 +337,7 @@ class UserController extends Controller
                 'max:500',
                 'regex:/^[a-zA-Z0-9\s,.\-\/()]+$/',
             ],
-            
+
             // Proof File - Gambar atau PDF
             'proof_file' => [
                 'required',
@@ -344,18 +351,18 @@ class UserController extends Controller
             'amount.numeric' => 'Jumlah pembayaran harus berupa angka!',
             'amount.min' => 'Jumlah pembayaran minimal Rp 1.000!',
             'amount.max' => 'Jumlah pembayaran maksimal Rp 100.000.000!',
-            
+
             'payment_date.required' => 'Tanggal pembayaran tidak boleh kosong!',
             'payment_date.date' => 'Format tanggal tidak valid!',
             'payment_date.before_or_equal' => 'Tanggal pembayaran tidak boleh di masa depan!',
             'payment_date.after' => 'Tanggal pembayaran tidak valid!',
-            
+
             'payment_method.required' => 'Metode pembayaran tidak boleh kosong!',
             'payment_method.in' => 'Metode pembayaran tidak valid!',
-            
+
             'description.regex' => 'Deskripsi mengandung karakter yang tidak diperbolehkan!',
             'description.max' => 'Deskripsi maksimal 500 karakter!',
-            
+
             'proof_file.required' => 'Bukti pembayaran tidak boleh kosong!',
             'proof_file.file' => 'File bukti pembayaran tidak valid!',
             'proof_file.mimes' => 'Format file hanya JPG, JPEG, PNG, atau PDF!',
@@ -396,7 +403,7 @@ class UserController extends Controller
         if ($payment->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access');
         }
-        
+
         return view('user.payments.show', compact('payment'));
     }
 
@@ -444,7 +451,7 @@ class UserController extends Controller
                 'min:5',
                 'max:255',
             ],
-            
+
             // Description - Huruf, angka, dan tanda baca
             'description' => [
                 'required',
@@ -452,19 +459,19 @@ class UserController extends Controller
                 'min:10',
                 'max:2000',
             ],
-            
+
             // Category - Hanya pilihan yang valid
             'category' => [
                 'required',
                 'in:maintenance,facility,neighbor,cleanliness,security,other',
             ],
-            
+
             // Priority - Hanya pilihan yang valid
             'priority' => [
                 'required',
                 'in:low,medium,high',
             ],
-            
+
             // Public/Private flags
             'is_public' => 'boolean',
 
@@ -480,14 +487,14 @@ class UserController extends Controller
             'subject.required' => 'Judul keluhan tidak boleh kosong!',
             'subject.min' => 'Judul keluhan minimal 5 karakter!',
             'subject.max' => 'Judul keluhan maksimal 255 karakter!',
-            
+
             'description.required' => 'Deskripsi keluhan tidak boleh kosong!',
             'description.min' => 'Deskripsi keluhan minimal 10 karakter!',
             'description.max' => 'Deskripsi keluhan maksimal 2000 karakter!',
-            
+
             'category.required' => 'Kategori keluhan tidak boleh kosong!',
             'category.in' => 'Kategori keluhan tidak valid!',
-            
+
             'priority.required' => 'Prioritas keluhan tidak boleh kosong!',
             'priority.in' => 'Prioritas keluhan tidak valid!',
 
@@ -509,17 +516,17 @@ class UserController extends Controller
         }
 
         Complaint::create([
-            'user_id'               => auth()->id(),
-            'subject'               => $validated['subject'],
-            'description'           => $validated['description'],
-            'photo'                 => $photoPath,
-            'category'              => $validated['category'],
-            'priority'              => $validated['priority'],
-            'status'                => 'open',
-            'is_public'             => $request->boolean('is_public'),
+            'user_id' => auth()->id(),
+            'subject' => $validated['subject'],
+            'description' => $validated['description'],
+            'photo' => $photoPath,
+            'category' => $validated['category'],
+            'priority' => $validated['priority'],
+            'status' => 'open',
+            'is_public' => $request->boolean('is_public'),
         ]);
 
-        $message = $validated['is_public'] ?? false 
+        $message = $validated['is_public'] ?? false
             ? 'Keluhan publik berhasil diajukan dan dapat dilihat oleh semua penghuni'
             : 'Keluhan pribadi berhasil diajukan dan akan segera ditanggapi oleh admin';
 
@@ -555,7 +562,7 @@ class UserController extends Controller
     public function deletePhoto()
     {
         $user = auth()->user();
-        
+
         if ($user->photo) {
             Storage::disk('public')->delete($user->photo);
             $user->update(['photo' => null]);
