@@ -1,7 +1,8 @@
 @extends('user.layout')
 
 @section('content')
-<div class="max-w-2xl mx-auto space-y-6 pb-12">
+<div style="background: var(--color-background-tertiary, #FFF9EB); min-height: 100vh; padding-bottom: 48px;">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
     {{-- Header --}}
     <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 p-8 shadow-xl">
@@ -168,6 +169,7 @@
                 </button>
             </div>
         </form>
+    </div>
     </div>
 </div>
 

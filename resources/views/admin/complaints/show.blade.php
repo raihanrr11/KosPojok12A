@@ -1,13 +1,14 @@
 @extends('admin.layout')
 
 @section('content')
-<div class="max-w-5xl mx-auto space-y-6" x-data="{ statusModal: false, newStatus: '{{ $complaint->status }}', newStatusLabel: '' }">
-    <!-- Header -->
-    <div class="flex items-center justify-between">
-        <div class="flex items-center space-x-4">
-            <a href="{{ route('admin.complaints') }}" class="p-2 bg-white rounded-xl shadow-sm border border-gray-100 text-gray-400 hover:text-indigo-600 transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-            </a>
+<div class="sticky top-0 z-20 bg-gray-50/80 backdrop-blur-md -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 py-6 border-b border-gray-100 mb-6">
+    <div class="max-w-5xl mx-auto space-y-6" x-data="{ statusModal: false, newStatus: '{{ $complaint->status }}', newStatusLabel: '' }">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('admin.complaints') }}" class="p-2 bg-white rounded-xl shadow-sm border border-gray-100 text-gray-400 hover:text-indigo-600 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                </a>
             <div>
                 <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Detail Keluhan</h2>
                 <p class="text-sm text-gray-500 font-medium">ID Keluhan: #{{ $complaint->id }} • Diajukan {{ $complaint->created_at->diffForHumans() }}</p>
@@ -116,12 +117,12 @@
                 <div class="p-6">
                     <h3 class="text-xs font-black text-gray-400 uppercase tracking-widest mb-6">Informasi Penghuni</h3>
                     <div class="flex items-center space-x-4 mb-6">
-                        <div class="h-16 w-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-black shadow-lg ring-4 ring-indigo-50">
+                        <div class="h-16 w-16 rounded-3xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl font-black shadow-lg ring-4 ring-indigo-50">
                             {{ substr($complaint->user->name, 0, 1) }}
                         </div>
                         <div>
                             <p class="text-lg font-black text-gray-900 leading-none mb-1">{{ $complaint->user->name }}</p>
-                            <p class="text-sm font-bold text-indigo-600">Kamar {{ $complaint->user->room_number ?? '-' }}</p>
+                            <p class="text-sm font-bold text-gray-600">Kamar {{ $complaint->user->room_number ?? '-' }}</p>
                         </div>
                     </div>
                     <div class="space-y-4 pt-4 border-t border-gray-50">
@@ -142,15 +143,15 @@
                 <h3 class="text-sm font-black uppercase tracking-widest mb-4 opacity-80">Panduan Admin</h3>
                 <ul class="space-y-4">
                     <li class="flex items-start">
-                        <div class="h-5 w-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">1</div>
+                        <div class="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">1</div>
                         <p class="text-xs font-bold leading-relaxed">Berikan respon yang sopan dan jelas agar penghuni merasa didengar.</p>
                     </li>
                     <li class="flex items-start">
-                        <div class="h-5 w-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">2</div>
+                        <div class="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">2</div>
                         <p class="text-xs font-bold leading-relaxed">Update status secara berkala agar penghuni tahu progres perbaikan.</p>
                     </li>
                     <li class="flex items-start">
-                        <div class="h-5 w-5 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">3</div>
+                        <div class="h-10 w-10 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-black mr-3 mt-0.5">3</div>
                         <p class="text-xs font-bold leading-relaxed">Lampirkan catatan jika ada kendala dalam proses penanganan.</p>
                     </li>
                 </ul>
@@ -189,7 +190,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</template>
+    </template>
 </div>
 @endsection

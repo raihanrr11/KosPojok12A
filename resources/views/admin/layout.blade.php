@@ -55,7 +55,7 @@
        HEADER
     ========================= */
         header {
-            background-color: rgba(255, 255, 255, 0.85) !important;
+            background-color: #0B2C38 !important;
             backdrop-filter: blur(10px) !important;
             -webkit-backdrop-filter: blur(10px) !important;
             border-bottom: 1px solid #e2e8f0 !important;
@@ -544,12 +544,14 @@
                     <!-- User Profile Display -->
                     <div class="flex items-center space-x-3">
                         <div class="text-right hidden sm:block">
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Admin</p>
-                            <p class="text-sm font-bold text-gray-900">{{ Auth::user()->name }}</p>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Admin Kos</p>
+                            <p class="text-sm font-bold text-gray-200">
+                                Admin {{ \App\Models\Setting::get('dorm_name', 'Kos Pojok 12A') }}
+                            </p>
                         </div>
                         <div
                             class="w-10 h-10 rounded-xl bg-[#2BD5BB] text-gray-900 font-black shadow-md cursor-default flex items-center justify-center">
-                            {{ substr(Auth::user()->name, 0, 1) }}
+                            A
                         </div>
                     </div>
                 </div>
