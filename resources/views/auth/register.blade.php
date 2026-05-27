@@ -76,7 +76,7 @@
           </ul>
         </div>
 
-        <a href="https://web.whatsapp.com/" target="_blank"
+        <a href="{{ route('whatsapp.redirect', 'register') }}" target="_blank"
           class="w-full inline-flex justify-center items-center rounded-xl bg-[#25D366] text-white px-4 py-3.5 font-bold hover:bg-[#1DA851] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-[#25D366] transition-all transform hover:scale-[1.02] shadow-lg">
           <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
             <path
