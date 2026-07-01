@@ -40,8 +40,8 @@ class AdminController extends Controller
         }
 
         if (Schema::hasTable('complaints') && Schema::hasColumn('complaints', 'status')) {
-            $stats['open_complaints'] = Complaint::where('status', 'open')->count();
 
+            $stats['open_complaints'] = Complaint::where('status', 'open')->count();
             $recent_complaints = Complaint::with('user')
                 ->where('status', 'open')
                 ->latest()
@@ -136,17 +136,14 @@ class AdminController extends Controller
             'date_of_birth' => 'nullable|date',
             'emergency_contact' => 'nullable|string',
         ]);
-
         // handle photo
         $photoPath = null;
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('user-photos', 'public');
         }
-
         // Ambil harga sewa dari harga kamar pusat
         $room = \App\Models\Room::where('room_number', $validated['room_number'])->first();
         $monthlyRent = $room ? $room->price : $validated['monthly_rent'];
-
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -167,7 +164,6 @@ class AdminController extends Controller
         if ($room) {
             $room->update(['status' => 'occupied']);
         }
-
         return redirect()->route('admin.users')->with('success', 'Penghuni berhasil ditambahkan');
     }
 
@@ -180,26 +176,6 @@ class AdminController extends Controller
             ->orWhere('room_number', $user->room_number)
             ->get();
         return view('admin.users.edit', compact('user', 'availableRooms'));
-    }
-
-    public function userUpdatePhoto(Request $request)
-    {
-        $request->validate([
-            'photo' => 'required|image|mimes:jpeg,png,jpg|max:2048'
-        ]);
-
-        $user = Auth::user();
-
-        if ($user->photo && Storage::disk('public')->exists($user->photo)) {
-            Storage::disk('public')->delete($user->photo);
-        }
-
-        $path = $request->file('photo')->store('profile-photos', 'public');
-
-        $user->photo = $path;
-        $user->save();
-
-        return redirect()->back()->with('success', 'Foto profil berhasil diupdate');
     }
 
     public function userUpdate(Request $request, User $user)
@@ -497,8 +473,8 @@ class AdminController extends Controller
 
     public function complaintDestroy(Complaint $complaint)
     {
-        if ($complaint->status !== 'resolved') {
-            return redirect()->back()->with('error', 'Hanya keluhan yang sudah selesai yang dapat dihapus.');
+        if ($complaint->status !== 'resolved' && $complaint->status !== 'closed') {
+            return redirect()->back()->with('error', 'Hanya keluhan yang sudah selesai atau ditutup yang dapat dihapus.');
         }
 
         if ($complaint->photo) {
@@ -517,7 +493,6 @@ class AdminController extends Controller
             'dorm_name',
             'dorm_address',
             'dorm_city',
-            'dorm_phone',
             'dorm_email',
             'dorm_whatsapp',
             'dorm_bank_name',
@@ -537,8 +512,7 @@ class AdminController extends Controller
     public function dormSettingsUpdate(Request $request)
     {
         $formType = $request->input('_form_type', 'settings');
-
-        // ===== FORM PENGUMUMAN SAJA =====
+        // ===== FORM PENGUMUMAN =====
         if ($formType === 'announcement') {
             $validated = $request->validate([
                 'dorm_announcement' => 'nullable|string|max:2000',
@@ -548,13 +522,11 @@ class AdminController extends Controller
 
             return redirect()->route('admin.settings')->with('success', 'Pengumuman berhasil disimpan!');
         }
-
         // ===== FORM INFORMASI KOS =====
         $validated = $request->validate([
             'dorm_name' => 'required|string|max:255',
             'dorm_address' => 'nullable|string|max:500',
             'dorm_city' => 'nullable|string|max:100',
-            'dorm_phone' => 'nullable|string|max:20',
             'dorm_email' => 'nullable|email|max:255',
             'dorm_whatsapp' => 'nullable|string|max:20',
             'dorm_bank_name' => 'nullable|string|max:100',
@@ -563,11 +535,9 @@ class AdminController extends Controller
             'dorm_description' => 'nullable|string|max:1000',
             'dorm_open_hours' => 'nullable|string|max:255',
         ]);
-
         foreach ($validated as $key => $value) {
             Setting::set($key, $value);
         }
-
         return redirect()->route('admin.settings')->with('success', 'Pengaturan kos berhasil disimpan!');
     }
 }

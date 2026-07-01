@@ -21,7 +21,6 @@ class UserController extends Controller
     public function dashboard()
     {
         $user = auth()->user();
-
         // Stats pribadi user
         $stats = [
             'total_payments' => $user->payments()->count(),
@@ -30,25 +29,21 @@ class UserController extends Controller
             'total_complaints' => $user->complaints()->count(),
             'open_complaints' => $user->complaints()->where('status', 'open')->count(),
         ];
-
         // Data pribadi user
         $recent_payments = $user->payments()->latest()->take(3)->get();
         $recent_complaints = $user->complaints()->latest()->take(3)->get();
-
         // Data publik untuk semua user
         $public_complaints = Complaint::public()
             ->with(['user', 'respondedBy'])
             ->latest()
             ->take(5)
             ->get();
-
         // Stats keluhan publik
         $public_stats = [
             'total_public_complaints' => Complaint::public()->count(),
             'open_public_complaints' => Complaint::public()->where('status', 'open')->count(),
             'resolved_public_complaints' => Complaint::public()->where('status', 'resolved')->count(),
         ];
-
         return view('user.dashboard', compact(
             'stats',
             'recent_payments',
@@ -70,7 +65,6 @@ class UserController extends Controller
             'dorm_name',
             'dorm_address',
             'dorm_city',
-            'dorm_phone',
             'dorm_email',
             'dorm_whatsapp',
             'dorm_bank_name',
@@ -84,162 +78,6 @@ class UserController extends Controller
             $info[$key] = Setting::get($key);
         }
         return view('user.dorm-info', compact('info'));
-    }
-
-    /**
-     * Update Profile User
-     */
-    public function profileUpdate(Request $request)
-    {
-        $user = auth()->user();
-
-        $validated = $request->validate([
-            // Nama - Hanya huruf dan spasi
-            'name' => [
-                'required',
-                'string',
-                'min:3',
-                'max:100',
-                'regex:/^[a-zA-Z\s]+$/',
-            ],
-
-            // Email - Format valid dan unique (kecuali email user ini)
-            'email' => [
-                'required',
-                'string',
-                'email:rfc,dns',
-                'max:255',
-                \Illuminate\Validation\Rule::unique('users')->ignore($user->id)->whereNull('deleted_at'),
-                'regex:/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
-            ],
-
-            // Password lama (jika ingin ganti password)
-            'current_password' => [
-                'nullable',
-                'required_with:password',
-                'string',
-            ],
-
-            // Password baru
-            'password' => [
-                'nullable',
-                'string',
-                'min:8',
-                'max:255',
-                'confirmed',
-                'regex:/^(?=.*[A-Za-z])(?=.*\d).+$/',
-            ],
-
-            // No. Telepon
-            'phone' => [
-                'nullable',
-                'string',
-                'regex:/^(\+62|62|0)[0-9]{9,13}$/',
-                'min:10',
-                'max:15',
-            ],
-
-            // Tanggal Lahir
-            'date_of_birth' => [
-                'nullable',
-                'date',
-                'before:today',
-                'before:-17 years',
-                'after:1940-01-01',
-            ],
-
-            // Kontak Darurat
-            'emergency_contact' => [
-                'nullable',
-                'string',
-                'max:255',
-                'regex:/^[a-zA-Z0-9\s\-()]+$/',
-            ],
-
-            // Alamat
-            'address' => [
-                'nullable',
-                'string',
-                'max:500',
-                'regex:/^[a-zA-Z0-9\s,.\-\/]+$/',
-            ],
-
-            // Foto
-            'photo' => [
-                'nullable',
-                'image',
-                'mimes:jpeg,jpg,png',
-                'max:2048',
-            ],
-        ], [
-            // Custom Error Messages
-            'name.required' => 'Nama lengkap tidak boleh kosong!',
-            'name.regex' => 'Nama lengkap hanya boleh mengandung huruf dan spasi!',
-            'name.min' => 'Nama lengkap minimal 3 karakter!',
-
-            'email.required' => 'Email tidak boleh kosong!',
-            'email.email' => 'Format email tidak valid!',
-            'email.unique' => 'Email sudah digunakan oleh pengguna lain!',
-            'email.regex' => 'Format email tidak valid!',
-
-            'current_password.required_with' => 'Password lama harus diisi jika ingin mengganti password!',
-
-            'password.min' => 'Password baru minimal 8 karakter!',
-            'password.confirmed' => 'Konfirmasi password tidak cocok!',
-            'password.regex' => 'Password harus kombinasi huruf dan angka!',
-
-            'phone.regex' => 'Format nomor telepon tidak valid! Gunakan format: 08xxx atau +628xxx',
-            'phone.min' => 'Nomor telepon minimal 10 digit!',
-            'phone.max' => 'Nomor telepon maksimal 15 digit!',
-
-            'date_of_birth.before' => 'Usia minimal 17 tahun!',
-            'date_of_birth.after' => 'Tahun lahir tidak valid!',
-
-            'emergency_contact.regex' => 'Kontak darurat hanya boleh mengandung huruf, angka, spasi, tanda hubung, dan kurung!',
-
-            'address.regex' => 'Alamat mengandung karakter yang tidak diperbolehkan!',
-
-            'photo.image' => 'File harus berupa gambar!',
-            'photo.mimes' => 'Format foto hanya JPG, JPEG, atau PNG!',
-            'photo.max' => 'Ukuran foto maksimal 2MB!',
-        ]);
-
-        // Validasi password lama jika ingin ganti password
-        if ($request->filled('password')) {
-            if (!Hash::check($request->current_password, $user->password)) {
-                return back()->withErrors(['current_password' => 'Password lama tidak sesuai!'])->withInput();
-            }
-        }
-
-        // Sanitasi data
-        $validated['name'] = ucwords(strtolower(trim($validated['name'])));
-        $validated['email'] = strtolower(trim($validated['email']));
-
-        if (isset($validated['phone'])) {
-            $validated['phone'] = str_replace('-', '', $validated['phone']);
-        }
-
-        // Handle password
-        if ($request->filled('password')) {
-            $validated['password'] = Hash::make($validated['password']);
-        } else {
-            unset($validated['password']);
-        }
-        unset($validated['current_password']);
-
-        // Handle upload foto
-        if ($request->hasFile('photo')) {
-            // Hapus foto lama
-            if ($user->photo) {
-                Storage::disk('public')->delete($user->photo);
-            }
-            $validated['photo'] = $request->file('photo')->store('photos', 'public');
-        }
-
-        // Update user
-        $user->update($validated);
-
-        return redirect()->route('user.profile')->with('success', 'Profil berhasil diupdate!');
     }
 
     /**
@@ -258,15 +96,12 @@ class UserController extends Controller
                 $query->whereIn('status', ['resolved', 'closed']);
             }
         }
-
         $complaints = $query->latest()->paginate(10)->withQueryString();
-
         $counts = [
             'pending' => Complaint::public()->where('status', 'open')->count(),
             'in_progress' => Complaint::public()->where('status', 'in_progress')->count(),
             'completed' => Complaint::public()->whereIn('status', ['resolved', 'closed'])->count(),
         ];
-
         return view('user.public-complaints', compact('complaints', 'counts'));
     }
 
@@ -314,7 +149,6 @@ class UserController extends Controller
                 'min:1000',
                 'max:100000000',
             ],
-
             // Payment Date - Tidak boleh masa depan
             'payment_date' => [
                 'required',
@@ -322,14 +156,12 @@ class UserController extends Controller
                 'before_or_equal:today',
                 'after:2020-01-01',
             ],
-
             // Payment Method - Hanya pilihan yang valid
             'payment_method' => [
                 'required',
                 'string',
                 'in:cash,bank_transfer,e_wallet,other',
             ],
-
             // Description - Huruf, angka, dan tanda baca
             'description' => [
                 'nullable',
@@ -337,7 +169,6 @@ class UserController extends Controller
                 'max:500',
                 'regex:/^[a-zA-Z0-9\s,.\-\/()]+$/',
             ],
-
             // Proof File - Gambar atau PDF
             'proof_file' => [
                 'required',
@@ -393,7 +224,6 @@ class UserController extends Controller
             'proof_file' => $proofPath,
             'status' => 'pending',
         ]);
-
         return redirect()->route('user.payments')->with('success', 'Bukti pembayaran berhasil diupload dan menunggu verifikasi admin');
     }
 
@@ -444,38 +274,30 @@ class UserController extends Controller
     public function complaintStore(Request $request)
     {
         $validated = $request->validate([
-            // Subject - Huruf, angka, dan tanda baca
             'subject' => [
                 'required',
                 'string',
                 'min:5',
                 'max:255',
             ],
-
-            // Description - Huruf, angka, dan tanda baca
             'description' => [
                 'required',
                 'string',
                 'min:10',
                 'max:2000',
             ],
-
-            // Category - Hanya pilihan yang valid
             'category' => [
                 'required',
                 'in:maintenance,facility,neighbor,cleanliness,security,other',
             ],
 
-            // Priority - Hanya pilihan yang valid
             'priority' => [
                 'required',
                 'in:low,medium,high',
             ],
-
             // Public/Private flags
             'is_public' => 'boolean',
-
-            // Optional photo
+            // Optional 
             'photo' => [
                 'nullable',
                 'image',
@@ -502,11 +324,9 @@ class UserController extends Controller
             'photo.mimes' => 'Format foto hanya JPG, JPEG, atau PNG!',
             'photo.max' => 'Ukuran foto maksimal 3MB!',
         ]);
-
         // Sanitasi data
         $validated['subject'] = trim($validated['subject']);
         $validated['description'] = trim($validated['description']);
-
         // Handle photo upload
         $photoPath = null;
         if ($request->hasFile('photo')) {
@@ -514,7 +334,6 @@ class UserController extends Controller
             $filename = time() . '_complaint_' . auth()->id() . '.' . $file->getClientOriginalExtension();
             $photoPath = $file->storeAs('complaint-photos', $filename, 'public');
         }
-
         Complaint::create([
             'user_id' => auth()->id(),
             'subject' => $validated['subject'],
@@ -525,11 +344,9 @@ class UserController extends Controller
             'status' => 'open',
             'is_public' => $request->boolean('is_public'),
         ]);
-
         $message = $validated['is_public'] ?? false
             ? 'Keluhan publik berhasil diajukan dan dapat dilihat oleh semua penghuni'
             : 'Keluhan pribadi berhasil diajukan dan akan segera ditanggapi oleh admin';
-
         return redirect()->route('user.complaints')->with('success', $message);
     }
 
@@ -554,20 +371,5 @@ class UserController extends Controller
         }
 
         return view('user.public-complaint-show', compact('complaint'));
-    }
-
-    /**
-     * Delete user photo
-     */
-    public function deletePhoto()
-    {
-        $user = auth()->user();
-
-        if ($user->photo) {
-            Storage::disk('public')->delete($user->photo);
-            $user->update(['photo' => null]);
-        }
-
-        return redirect()->back()->with('success', 'Foto profil berhasil dihapus!');
     }
 }

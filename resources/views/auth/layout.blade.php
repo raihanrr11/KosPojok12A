@@ -20,7 +20,8 @@
     </div>
 
     <!-- brand header -->
-    <a href="https://web.whatsapp.com/" target="_blank" class="absolute top-6 left-6 text-gray-900 font-semibold tracking-tight">
+    <a href="https://web.whatsapp.com/" target="_blank"
+      class="absolute top-6 left-6 text-gray-900 font-semibold tracking-tight">
       <span class="inline-block px-2 py-1 rounded-lg bg-[#2BD5BB] text-gray-900 mr-2 shadow-sm">KP</span>
       Kos Pojok 12A
     </a>
@@ -33,6 +34,15 @@
       &copy; {{ date('Y') }} Kos Pojok 12A. All Rights Reserved.
     </footer>
   </div>
+</body>
+
+</html>yield('content')
+</main>
+
+<footer class="absolute bottom-6 text-[10px] font-black text-gray-400 tracking-[0.2em] uppercase">
+  &copy; {{ date('Y') }} Kos Pojok 12A. All Rights Reserved.
+</footer>
+</div>
 </body>
 
 </html>

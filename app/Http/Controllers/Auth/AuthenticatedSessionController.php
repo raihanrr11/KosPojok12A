@@ -30,19 +30,13 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
-        // Get authenticated user
         $user = Auth::user();
-        
-        // Debug: Log user data
         \Log::info('User logged in', [
             'id' => $user->id,
             'email' => $user->email,
             'role' => $user->role ?? 'no_role'
         ]);
-        
         // Check role and redirect — do NOT use intended() here,
         // as a cached intended URL could send an admin to a user route.
         if (isset($user->role)) {
@@ -50,13 +44,11 @@ class AuthenticatedSessionController extends Controller
                 \Log::info('Redirecting to admin dashboard');
                 return redirect()->route('admin.dashboard');
             }
-
             if ($user->role === 'user') {
                 \Log::info('Redirecting to user dashboard');
                 return redirect()->route('user.dashboard');
             }
         }
-
         // Fallback redirect
         \Log::info('Fallback redirect to home');
         return redirect(RouteServiceProvider::HOME);
@@ -75,4 +67,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
-}   
+}

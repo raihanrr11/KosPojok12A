@@ -148,13 +148,6 @@
                     </div>
                     <div class="p-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor Telepon</label>
-                            <input type="text" name="dorm_phone" value="{{ old('dorm_phone', $settings['dorm_phone']) }}"
-                                class="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition"
-                                placeholder="0341-xxxxxx">
-                        </div>
-
-                        <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">WhatsApp</label>
                             <input type="text" name="dorm_whatsapp"
                                 value="{{ old('dorm_whatsapp', $settings['dorm_whatsapp']) }}"
@@ -162,7 +155,7 @@
                                 placeholder="08xxxxxxxxxx">
                         </div>
 
-                        <div class="sm:col-span-2">
+                        <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Email</label>
                             <input type="email" name="dorm_email" value="{{ old('dorm_email', $settings['dorm_email']) }}"
                                 class="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 focus:bg-white transition @error('dorm_email') border-red-400 @enderror"

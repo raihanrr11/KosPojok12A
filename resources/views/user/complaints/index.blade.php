@@ -40,8 +40,9 @@
                     <div>
                         <h4 class="text-sm font-bold text-red-950">Mengalami Kendala Darurat / Mendesak?</h4>
                         <p class="text-xs text-red-700 mt-0.5 leading-relaxed">
-                            Jika Anda menghadapi situasi darurat yang butuh penanganan instan (seperti air bocor parah,
-                            korsleting listrik, kunci rusak, atau masalah urgent lainnya), silakan hubungi Admin langsung
+                            Jika Anda menghadapi situasi darurat yang butuh penanganan segera (seperti air bocor parah,
+                            korsleting listrik, kunci rusak/hilang, atau masalah lainnya), maka segera hubungi Admin
+                            langsung
                             via WhatsApp.
                         </p>
                     </div>

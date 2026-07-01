@@ -52,7 +52,6 @@ class RoomController extends Controller
             'description' => $validated['description'],
             'photos' => $photos,
         ]);
-
         return redirect()->route('admin.rooms.index')->with('success', 'Kamar berhasil ditambahkan.');
     }
 
@@ -130,14 +129,14 @@ class RoomController extends Controller
     public function deletePhoto(Room $room, $index)
     {
         $photos = $room->photos ?? [];
-        
+
         if (isset($photos[$index])) {
             Storage::disk('public')->delete($photos[$index]);
             unset($photos[$index]);
-            
+
             // Re-index array
             $room->update(['photos' => array_values($photos)]);
-            
+
             return back()->with('success', 'Foto berhasil dihapus.');
         }
 

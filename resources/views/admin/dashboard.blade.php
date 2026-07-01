@@ -152,7 +152,7 @@
                     <div class="p-6 flex-1">
                         <div class="space-y-4">
                             @forelse($recent_payments as $payment)
-                                <div
+                                <a href="{{ route('admin.payments.show', $payment) }}"
                                     class="group flex items-center space-x-4 p-4 rounded-lg hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50 transition-all duration-300 transform hover:scale-105 cursor-pointer">
                                     <div class="flex-shrink-0">
                                         <div
@@ -178,7 +178,7 @@
                                             Pending
                                         </span>
                                     </div>
-                                </div>
+                                </a>
                             @empty
                                 <div class="text-center py-8">
                                     <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24"
@@ -220,7 +220,7 @@
                     <div class="p-6 flex-1">
                         <div class="space-y-4">
                             @forelse($recent_complaints as $complaint)
-                                <div
+                                <a href="{{ route('admin.complaints.show', $complaint) }}"
                                     class="group flex items-center space-x-4 p-4 rounded-lg hover:bg-gradient-to-r hover:from-red-50 hover:to-pink-50 transition-all duration-300 transform hover:scale-105 cursor-pointer">
                                     <div class="flex-shrink-0">
                                         <div
@@ -246,7 +246,7 @@
                                             {{ $complaint->status_label }}
                                         </span>
                                     </div>
-                                </div>
+                                </a>
                             @empty
                                 <div class="text-center py-8">
                                     <svg class="mx-auto h-12 w-12 text-gray-300" fill="none" viewBox="0 0 24 24"

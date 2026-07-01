@@ -10,7 +10,8 @@
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800|space-grotesk:400,500,600,700&display=swap"
+    <link
+        href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800|space-grotesk:400,500,600,700&display=swap"
         rel="stylesheet" />
 
     <!-- Scripts -->
@@ -23,7 +24,8 @@
 <body class="font-sans antialiased bg-slate-50" style="font-family: 'Plus Jakarta Sans', sans-serif;">
     <div class="min-h-screen flex flex-col">
         <!-- Navigation (sticky) -->
-        <nav class="sticky top-0 z-50 bg-[#2BD5BB] border-b border-[#077A7D]/20 shadow-sm" x-data="{ mobileOpen: false }">
+        <nav class="sticky top-0 z-50 bg-[#2BD5BB] border-b border-[#077A7D]/20 shadow-sm"
+            x-data="{ mobileOpen: false }">
             <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
                 <div class="flex justify-between h-[80px]">
                     <div class="flex">
